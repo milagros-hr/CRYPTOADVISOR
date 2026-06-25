@@ -1,0 +1,35 @@
+{
+  "app": {
+    "secret_key": "cryptobayes_secret_2024",
+    "debug": true,
+    "port": 5000,
+    "name": "CryptoAdvisor"
+  },
+  "binance": {
+    "base_url": "https://api.binance.com/api/v3",
+    "interval": "1h",
+    "limit": 120,
+    "cache_ttl_seconds": 60
+  },
+  "cryptos": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "BNBUSDT",
+    "SOLUSDT",
+    "ADAUSDT",
+    "XRPUSDT",
+    "DOGEUSDT"
+  ],
+  "bayesian": {
+    "threshold_buy": 0.65,
+    "threshold_sell": 0.4
+  },
+  "simulation": {
+    "initial_balance": 10000.0,
+    "currency": "USDT"
+<<<<<<< HEAD
+  }  
+=======
+  }
+>>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
+}

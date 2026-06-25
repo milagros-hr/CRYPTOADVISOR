@@ -1,0 +1,25 @@
+{
+  "description": "Datos de entrenamiento para el modelo bayesiano de CryptoAdvisor",
+  "samples": [
+    {"tendencia": "alcista", "volumen": "alto",  "volatilidad": "baja",  "accion": "comprar", "resultado": "exitoso"},
+    {"tendencia": "alcista", "volumen": "alto",  "volatilidad": "media", "accion": "comprar", "resultado": "exitoso"},
+    {"tendencia": "alcista", "volumen": "medio", "volatilidad": "baja",  "accion": "comprar", "resultado": "exitoso"},
+    {"tendencia": "alcista", "volumen": "alto",  "volatilidad": "alta",  "accion": "comprar", "resultado": "exitoso"},
+    {"tendencia": "alcista", "volumen": "bajo",  "volatilidad": "baja",  "accion": "esperar", "resultado": "exitoso"},
+    {"tendencia": "alcista", "volumen": "bajo",  "volatilidad": "alta",  "accion": "esperar", "resultado": "exitoso"},
+    {"tendencia": "bajista", "volumen": "alto",  "volatilidad": "alta",  "accion": "vender",  "resultado": "exitoso"},
+    {"tendencia": "bajista", "volumen": "alto",  "volatilidad": "media", "accion": "vender",  "resultado": "exitoso"},
+    {"tendencia": "bajista", "volumen": "medio", "volatilidad": "alta",  "accion": "vender",  "resultado": "exitoso"},
+    {"tendencia": "bajista", "volumen": "bajo",  "volatilidad": "baja",  "accion": "esperar", "resultado": "exitoso"},
+    {"tendencia": "lateral", "volumen": "medio", "volatilidad": "baja",  "accion": "esperar", "resultado": "exitoso"},
+    {"tendencia": "lateral", "volumen": "alto",  "volatilidad": "media", "accion": "esperar", "resultado": "exitoso"},
+    {"tendencia": "alcista", "volumen": "bajo",  "volatilidad": "media", "accion": "comprar", "resultado": "fallido"},
+    {"tendencia": "bajista", "volumen": "bajo",  "volatilidad": "baja",  "accion": "vender",  "resultado": "fallido"},
+    {"tendencia": "lateral", "volumen": "bajo",  "volatilidad": "alta",  "accion": "comprar", "resultado": "fallido"},
+    {"tendencia": "lateral", "volumen": "alto",  "volatilidad": "alta",  "accion": "comprar", "resultado": "fallido"},
+    {"tendencia": "bajista", "volumen": "alto",  "volatilidad": "baja",  "accion": "comprar", "resultado": "fallido"},
+    {"tendencia": "alcista", "volumen": "alto",  "volatilidad": "baja",  "accion": "vender",  "resultado": "fallido"},
+    {"tendencia": "alcista", "volumen": "medio", "volatilidad": "media", "accion": "comprar", "resultado": "exitoso"},
+    {"tendencia": "bajista", "volumen": "medio", "volatilidad": "media", "accion": "vender",  "resultado": "exitoso"}
+  ]
+}

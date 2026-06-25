@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoAdvisor — Iniciar Sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+
+  <div class="login-bg">
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="login-container">
+    <div class="login-card">
+
+      <div class="login-logo">
+        <div class="logo-mark">⬡</div>
+        <h1>Crypto<span>Advisor</span></h1>
+        <p class="logo-sub">Sistema de Análisis con Redes Bayesianas</p>
+      </div>
+
+      {% if error %}
+      <div class="alert alert-danger">
+        <span>⚠</span> {{ error }}
+      </div>
+      {% endif %}
+
+      <form method="POST" action="/login" class="login-form">
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Ingresa tu usuario"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+          Ingresar al Sistema
+        </button>
+      </form>
+
+      <div class="login-hint">
+<<<<<<< HEAD
+        <p>¿No tienes cuenta? <a href="/registro">Crear usuario nuevo</a></p>
+=======
+>>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
+        <p>🧑‍💼 <strong>Usuario:</strong> usuario / user123</p>
+        <p>🔐 <strong>Admin:</strong> admin / admin123</p>
+      </div>
+
+    </div>
+
+    <div class="login-info">
+      <div class="info-card">
+        <div class="info-icon">📊</div>
+        <h3>Datos Reales</h3>
+        <p>Precios en vivo desde la API pública de Binance</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🧠</div>
+        <h3>IA Bayesiana</h3>
+        <p>Modelo probabilístico con Naive Bayes</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🛡️</div>
+        <h3>Simulación</h3>
+        <p>Sin operaciones reales — modo seguro</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

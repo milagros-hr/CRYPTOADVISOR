@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>CryptoAdvisor — Registro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+  <div class="login-bg"><div class="grid-overlay"></div></div>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo-mark">⬡</div>
+        <h1>Crypto<span>Advisor</span></h1>
+        <p class="logo-sub">Crear cuenta de usuario</p>
+      </div>
+
+      {% if error %}
+      <div class="alert alert-danger">⚠ {{ error }}</div>
+      {% endif %}
+
+      <form method="POST" action="/registro" class="login-form">
+        <div class="form-group">
+          <label>Usuario</label>
+          <input type="text" name="username" placeholder="Ej. trader01" required>
+        </div>
+        <div class="form-group">
+          <label>Correo</label>
+          <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" name="password" placeholder="Mínimo 4 caracteres" required>
+        </div>
+        <div class="form-group">
+          <label>Perfil de riesgo</label>
+          <select name="perfil_riesgo" class="input-control">
+            <option value="conservador">Conservador</option>
+            <option value="moderado" selected>Moderado</option>
+            <option value="agresivo">Agresivo</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Crear cuenta</button>
+      </form>
+
+      <div class="login-hint">
+        <p>¿Ya tienes cuenta? <a href="/login">Iniciar sesión</a></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+CryptoAdvisor - ejecución local
+
+1) Abrir PowerShell dentro de esta carpeta.
+2) Crear entorno virtual con Python 3.12:
+   py -3.12 -m venv .venv
+
+3) Activar:
+   .\.venv\Scripts\Activate.ps1
+
+4) Instalar dependencias:
+   python -m pip install -r requirements.txt
+
+5) Ejecutar:
+   python app.py
+
+Accesos:
+- usuario / user123
+- admin   / admin123
+
+Notas:
+- El sistema usa endpoints públicos de Binance, no necesita API key.
+- No ejecuta órdenes reales; solo genera recomendaciones BUY/SELL/HOLD.
+- Los indicadores se calculan en backend.

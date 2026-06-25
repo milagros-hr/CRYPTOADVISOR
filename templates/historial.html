@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoAdvisor — Historial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="app-page {% if rol == 'admin' %}admin-theme{% endif %}">
+
+  <nav class="sidebar {% if rol == 'admin' %}admin-sidebar{% endif %}">
+    <div class="sidebar-logo">
+      <span class="logo-mark">⬡</span>
+      <span>Crypto<b>Advisor</b></span>
+    </div>
+    <ul class="sidebar-nav">
+      {% if rol == 'admin' %}
+      <li><a href="/admin">🛡️ Panel Admin</a></li>
+      {% else %}
+      <li><a href="/dashboard">📊 Dashboard</a></li>
+      {% endif %}
+      <li class="active"><a href="/historial">📋 Historial</a></li>
+      <li><a href="/estadisticas">📈 Estadísticas</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <span class="user-avatar {% if rol == 'admin' %}admin-avatar{% endif %}">{{ username[0]|upper }}</span>
+        <div>
+          <strong>{{ username }}</strong>
+          <span class="role-badge {% if rol == 'admin' %}admin-badge{% endif %}">{{ rol|capitalize }}</span>
+        </div>
+      </div>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <header class="page-header">
+      <div>
+        <h1>📋 Historial de Operaciones</h1>
+        <p class="subtitle">
+          {% if rol == 'admin' %}
+          Todas las operaciones registradas en el sistema
+          {% else %}
+          Tus operaciones de análisis
+          {% endif %}
+        </p>
+      </div>
+      <div class="filter-bar">
+        <input
+          type="text"
+          id="filtro-busqueda"
+          placeholder="🔍 Buscar por cripto, acción..."
+          oninput="filtrarTabla()"
+        >
+        <select id="filtro-estado" onchange="filtrarTabla()">
+          <option value="">Todos los estados</option>
+          <option value="pendiente">⏳ Pendiente</option>
+          <option value="aprobada">✅ Aprobada</option>
+          <option value="rechazada">❌ Rechazada</option>
+        </select>
+      </div>
+    </header>
+
+    <section class="table-section">
+      {% if operaciones %}
+      <div class="table-wrapper">
+        <table class="data-table" id="tabla-historial">
+          <thead>
+            <tr>
+              <th>#</th>
+              {% if rol == 'admin' %}<th>Usuario</th>{% endif %}
+              <th>Cripto</th>
+              <th>Acción</th>
+              <th>Precio</th>
+              <th>Probabilidad</th>
+              <th>Tendencia</th>
+              <th>Estado</th>
+              <th>Nota Admin</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for op in operaciones %}
+            <tr class="hist-row" data-estado="{{ op.estado }}" data-cripto="{{ op.cripto }}" data-accion="{{ op.accion }}">
+              <td><span class="op-id">#{{ op.id }}</span></td>
+              {% if rol == 'admin' %}<td>{{ op.username }}</td>{% endif %}
+              <td><span class="cripto-tag">{{ op.cripto | replace('USDT','') }}</span></td>
+              <td>
+                <span class="accion-badge accion-{{ op.accion }}">
+                  {{ {'comprar':'📈 Comprar','vender':'📉 Vender','esperar':'⏳ Esperar'}.get(op.accion, op.accion) }}
+                </span>
+              </td>
+              <td>${{ "%.4f"|format(op.precio_actual|float) }}</td>
+              <td>
+                <div class="prob-bar-container">
+                  <div class="prob-bar" style="width: {{ (op.probabilidad * 100)|round|int }}%"></div>
+                  <span>{{ (op.probabilidad * 100)|round(1) }}%</span>
+                </div>
+              </td>
+              <td>
+                <span class="tendencia-{{ op.tendencia }}">
+                  {{ {'alcista':'🟢 Alcista','bajista':'🔴 Bajista','lateral':'🟡 Lateral'}.get(op.tendencia, op.tendencia) }}
+                </span>
+              </td>
+              <td>
+                <span class="estado-badge estado-{{ op.estado }}">
+                  {{ {'pendiente':'⏳ Pendiente','aprobada':'✅ Aprobada','rechazada':'❌ Rechazada'}.get(op.estado, op.estado) }}
+                </span>
+              </td>
+              <td class="nota-col">{{ op.admin_nota or '—' }}</td>
+              <td class="date-col">{{ op.created_at[:16] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footer">
+        Total: <strong>{{ operaciones|length }}</strong> operación(es)
+      </div>
+
+      {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>No hay operaciones registradas</h3>
+        <p>Aún no se han realizado análisis en el sistema</p>
+        {% if rol != 'admin' %}
+        <a href="/dashboard" class="btn btn-primary">Realizar primer análisis</a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </section>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script>
+    function filtrarTabla() {
+      const busqueda = document.getElementById('filtro-busqueda').value.toLowerCase();
+      const estado   = document.getElementById('filtro-estado').value;
+      const filas    = document.querySelectorAll('.hist-row');
+
+      filas.forEach(fila => {
+        const text       = fila.textContent.toLowerCase();
+        const estadoFila = fila.dataset.estado;
+        const mostrar    = text.includes(busqueda) && (estado === '' || estadoFila === estado);
+        fila.style.display = mostrar ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

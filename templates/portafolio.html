@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoAdvisor — Portafolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="app-page">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark">⬡</span>
+      <span>Crypto<b>Advisor</b></span>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="/dashboard">📊 Dashboard</a></li>
+      <li class="active"><a href="/portafolio">💼 Portafolio</a></li>
+      <li><a href="/historial">📋 Mi Historial</a></li>
+      <li><a href="/estadisticas">📈 Estadísticas</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <span class="user-avatar">{{ username[0]|upper }}</span>
+        <div>
+          <strong>{{ username }}</strong>
+          <span class="role-badge">Usuario</span>
+        </div>
+      </div>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <header class="page-header">
+      <div>
+        <h1>💼 Portafolio Personal</h1>
+        <p class="subtitle">Registro manual de posiciones para seguimiento y paper trading. No ejecuta operaciones reales.</p>
+      </div>
+      <a href="/dashboard" class="btn btn-secondary">Volver al análisis</a>
+    </header>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    {% if mensaje %}
+    <div class="alert alert-success">{{ mensaje }}</div>
+    {% endif %}
+
+    <section class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Activos</span>
+        <strong class="stat-value">{{ resumen.activos }}</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Valor invertido</span>
+        <strong class="stat-value">${{ "%.2f"|format(resumen.valor_invertido) }}</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Valor actual</span>
+        <strong class="stat-value">${{ "%.2f"|format(resumen.valor_actual) }}</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">PnL no realizado</span>
+        <strong class="stat-value {% if resumen.pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+          ${{ "%.2f"|format(resumen.pnl) }} ({{ "%.2f"|format(resumen.pnl_pct) }}%)
+        </strong>
+      </div>
+    </section>
+
+    <section class="analysis-panel">
+      <div class="panel-left">
+        <h2>Agregar posición manual</h2>
+        <form method="POST" class="portfolio-form">
+          <div class="form-group">
+            <label>Criptomoneda</label>
+            <select name="cripto" class="input-control" required>
+              {% for cripto in criptos %}
+              <option value="{{ cripto }}">{{ cripto }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Cantidad</label>
+            <input class="input-control" type="number" step="0.00000001" min="0" name="cantidad" placeholder="Ej: 0.05" required>
+          </div>
+
+          <div class="form-group">
+            <label>Precio de compra (USDT)</label>
+            <input class="input-control" type="number" step="0.0001" min="0" name="precio_compra" placeholder="Ej: 65000" required>
+          </div>
+
+          <div class="form-group">
+            <label>Notas</label>
+            <input class="input-control" type="text" name="notas" placeholder="Opcional: compra simulada, estrategia, etc.">
+          </div>
+
+          <button class="btn btn-primary" type="submit">Guardar en portafolio</button>
+        </form>
+      </div>
+
+      <div class="panel-right">
+        <div class="resultado-card">
+          <h3>Regla del informe</h3>
+          <p>Este módulo corresponde a RF-10 y RF-11: el usuario registra posiciones actuales y el sistema calcula valor actual, PnL y variación porcentual.</p>
+          <p class="legal-text">CryptoAdvisor no administra fondos y no ejecuta órdenes reales; solo permite seguimiento académico del portafolio.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-section">
+      <h2>Mis posiciones</h2>
+      {% if activos %}
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Activo</th>
+              <th>Cantidad</th>
+              <th>Precio compra</th>
+              <th>Precio actual</th>
+              <th>Invertido</th>
+              <th>Actual</th>
+              <th>PnL</th>
+              <th>Notas</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in activos %}
+            <tr>
+              <td><span class="cripto-tag">{{ a.cripto.replace("USDT","") }}</span></td>
+              <td>{{ "%.8f"|format(a.cantidad|float) }}</td>
+              <td>${{ "%.4f"|format(a.precio_compra|float) }}</td>
+              <td>${{ "%.4f"|format(a.precio_actual|float) }}</td>
+              <td>${{ "%.2f"|format(a.valor_invertido|float) }}</td>
+              <td>${{ "%.2f"|format(a.valor_actual|float) }}</td>
+              <td>
+                <strong class="{% if a.pnl >= 0 %}text-success{% else %}text-danger{% endif %}">
+                  ${{ "%.2f"|format(a.pnl|float) }} / {{ "%.2f"|format(a.pnl_pct|float) }}%
+                </strong>
+              </td>
+              <td>{{ a.notas or "—" }}</td>
+              <td>
+                <form method="POST" action="/portafolio/eliminar/{{ a.id }}" onsubmit="return confirm('¿Eliminar esta posición?')">
+                  <button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="empty-state">Aún no tienes posiciones registradas. Agrega una posición manual para calcular tu PnL.</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

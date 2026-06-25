@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoAdvisor — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="app-page">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark">⬡</span>
+      <span>Crypto<b>Advisor</b></span>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="active"><a href="/dashboard">📊 Dashboard</a></li>
+<<<<<<< HEAD
+      <li><a href="/portafolio">💼 Portafolio</a></li>
+=======
+>>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
+      <li><a href="/historial">📋 Mi Historial</a></li>
+      <li><a href="/estadisticas">📈 Estadísticas</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <span class="user-avatar">{{ username[0]|upper }}</span>
+        <div>
+          <strong>{{ username }}</strong>
+          <span class="role-badge">Usuario</span>
+        </div>
+      </div>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <header class="page-header">
+      <div>
+        <h1>Análisis de Mercado</h1>
+        <p class="subtitle">Selecciona una criptomoneda y realiza un análisis con IA</p>
+      </div>
+      <div class="header-clock" id="header-clock"></div>
+    </header>
+
+    <!-- SELECTOR DE CRIPTO Y ACCIÓN -->
+    <section class="analysis-panel">
+      <div class="panel-left">
+        <h2>⚙ Configurar Análisis</h2>
+
+        <div class="form-group">
+          <label>Criptomoneda</label>
+<<<<<<< HEAD
+          <div id="selector-criptos" style="display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 20px 0;">
+            {% for cripto in criptos %}
+            <button class="btn-cripto {% if loop.first %}activo{% endif %}"
+                    data-symbol="{{ cripto }}"
+                    onclick="seleccionarCripto('{{ cripto }}')">
+              {{ cripto.replace("USDT","") }}
+=======
+          <div class="crypto-selector">
+            {% for cripto in cryptos %}
+            <button
+              class="crypto-btn {% if loop.first %}active{% endif %}"
+              data-symbol="{{ cripto }}"
+              onclick="seleccionarCripto(this)"
+            >
+              <span class="crypto-icon">{{ {'BTCUSDT':'₿','ETHUSDT':'Ξ','BNBUSDT':'◈','SOLUSDT':'◎','ADAUSDT':'₳'}.get(cripto, '?') }}</span>
+              {{ cripto | replace('USDT','') }}
+>>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
+            </button>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Acción a Evaluar</label>
+          <div class="action-selector">
+            <button class="action-btn buy active" data-accion="comprar" onclick="seleccionarAccion(this)">
+              📈 COMPRAR
+            </button>
+            <button class="action-btn sell" data-accion="vender" onclick="seleccionarAccion(this)">
+              📉 VENDER
+            </button>
+            <button class="action-btn wait" data-accion="esperar" onclick="seleccionarAccion(this)">
+              ⏳ ESPERAR
+            </button>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label>Perfil de Riesgo</label>
+          <select id="perfil-riesgo" class="input-control">
+            <option value="conservador" {% if perfil == 'conservador' %}selected{% endif %}>Conservador (80%)</option>
+            <option value="moderado" {% if perfil == 'moderado' %}selected{% endif %}>Moderado (70%)</option>
+            <option value="agresivo" {% if perfil == 'agresivo' %}selected{% endif %}>Agresivo (60%)</option>
+          </select>
+          <small>El umbral controla cuándo BUY/SELL se convierte en HOLD.</small>
+        </div>
+
+<<<<<<< HEAD
+        <div class="form-group info-box">
+          <label>Modo de uso</label>
+          <small>
+            CryptoAdvisor no ejecuta compras ni ventas reales. Solo genera recomendaciones BUY, SELL o HOLD
+            con datos de Binance e inferencia bayesiana, según el alcance del informe.
+          </small>
+        </div>
+
+        <div class="form-group info-box">
+          <label>Portafolio manual</label>
+          <small>Tienes {{ activos_portafolio or 0 }} posiciones registradas para seguimiento de PnL.</small>
+          <br>
+          <a class="btn btn-sm btn-secondary" href="/portafolio">Abrir portafolio</a>
+        </div>
+
+=======
+>>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
+        <button class="btn btn-primary btn-lg" onclick="ejecutarAnalisis()" id="btn-analizar">
+          🧠 Analizar con IA Bayesiana
+        </button>
+
+        <div id="loading" class="loading hidden">
+          <div class="spinner"></div>
+          <span>Consultando Binance y calculando probabilidades...</span>
+        </div>
+      </div>
+
+      <!-- PRECIO EN VIVO -->
+      <div class="panel-right">
+        <div class="price-card" id="price-card">
+          <div class="price-symbol" id="price-symbol">BTC</div>
+          <div class="price-value" id="price-value">$—</div>
+          <div class="price-label">Precio actual (USDT)</div>
+<<<<<<< HEAD
+          <div class="price-label" id="price-updated-at">Actualización automática cada 60s</div>
+          <button class="btn btn-sm" onclick="actualizarPrecio(true)">↻ Actualizar ahora</button>
+=======
+          <button class="btn btn-sm" onclick="actualizarPrecio()">↻ Actualizar</button>
+>>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
+        </div>
+
+        <div class="market-hints">
+          <h3>💡 ¿Cómo funciona?</h3>
+          <ol>
+            <li>Selecciona una criptomoneda</li>
+            <li>Elige tu acción (comprar/vender/esperar)</li>
+            <li>La IA analiza tendencia, volumen y volatilidad</li>
+            <li>El modelo bayesiano calcula la probabilidad de éxito</li>
+<<<<<<< HEAD
+            <li>El resultado se guarda en tu historial para trazabilidad</li>
+=======
+            <li>Tu solicitud pasa a revisión del administrador</li>
+>>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTADO DEL ANÁLISIS -->
+    <section id="resultado-section" class="hidden">
+      <h2>📊 Resultado del Análisis</h2>
+      <div class="resultado-grid">
+
+        <div class="resultado-card mercado-card">
+          <h3>📡 Datos de Mercado</h3>
+          <div class="metric-row">
+            <span>Precio actual</span>
+            <strong id="res-precio">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>Cambio período</span>
+            <strong id="res-cambio">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>Tendencia</span>
+            <strong id="res-tendencia">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>Volumen relativo</span>
+            <strong id="res-volumen">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>Volatilidad</span>
+            <strong id="res-volatilidad">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>RSI 14</span>
+            <strong id="res-rsi">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>MACD</span>
+            <strong id="res-macd">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>VWAP</span>
+            <strong id="res-vwap">—</strong>
+          </div>
+          <div class="metric-row">
+            <span>Liquidez 24h</span>
+            <strong id="res-liquidez">—</strong>
+          </div>
+        </div>
+
+        <div class="resultado-card bayes-card">
+          <h3>🧠 Modelo Bayesiano</h3>
+          <div class="prob-circle-container">
+            <svg class="prob-circle" viewBox="0 0 120 120">
+              <circle class="circle-bg" cx="60" cy="60" r="50"/>
+              <circle class="circle-fill" id="circle-fill" cx="60" cy="60" r="50"
+                stroke-dasharray="314" stroke-dashoffset="314"/>
+            </svg>
+            <div class="prob-text">
+              <span id="prob-pct">0%</span>
+              <small>Probabilidad</small>
+            </div>
+          </div>
+          <div class="confianza-badge" id="confianza-badge">—</div>
+          <p class="recomendacion" id="recomendacion">—</p>
+          <p class="probabilidades-detalle" id="probabilidades-detalle">BUY — · SELL — · HOLD —</p>
+          <p class="warning-text hidden" id="volatilidad-warning"></p>
+          <p class="legal-text" id="aviso-legal">
+            Este sistema no ofrece asesoramiento financiero. Invierta con responsabilidad.
+          </p>
+        </div>
+
+        <div class="resultado-card estado-card">
+          <h3>✅ Estado de Solicitud</h3>
+          <div class="estado-icon" id="estado-icon">⏳</div>
+          <p id="estado-texto">Tu solicitud ha sido enviada al administrador para revisión.</p>
+          <div class="operacion-id" id="operacion-id">ID: —</div>
+          <a href="/historial" class="btn btn-sm btn-secondary">Ver Historial</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/usuario.js') }}"></script>
+</body>
+</html>

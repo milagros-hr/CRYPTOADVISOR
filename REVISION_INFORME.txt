@@ -1,0 +1,17 @@
+REVISION CONTRA EL INFORME - CryptoAdvisor
+
+Implementado:
+[OK] Registro/Login de usuario.
+[OK] Perfil de riesgo: conservador, moderado, agresivo.
+[OK] Selección de pares: BTC/USDT, ETH/USDT, BNB/USDT, SOL/USDT, ADA/USDT, XRP/USDT, DOGE/USDT.
+[OK] Recomendaciones BUY / SELL / HOLD.
+[OK] Nivel de confianza de la recomendación.
+[OK] Integración Binance API pública: precio, ticker 24h, klines y depth.
+[OK] Indicadores backend: RSI, MACD, Bollinger, EMA20, SMA50, VWAP.
+[OK] Regla de liquidez mínima.
+[OK] Advertencia de volatilidad.
+[OK] Aviso legal de no asesoramiento financiero.
+[OK] Historial de recomendaciones.
+[OK] Panel administrador con pendientes y monitoreo básico.
+[OK] Portafolio manual: activo, cantidad, precio de compra, valor actual y PnL.
+[OK] Actualización de precios automática en dashboard.
