@@ -1,6 +1,5 @@
 /**
  * static/js/usuario.js
-<<<<<<< HEAD
  * Dashboard del usuario en CryptoAdvisor.
  * Incluye actualización automática del precio actual cada 60 segundos.
  */
@@ -39,27 +38,6 @@ function seleccionarCripto(valor) {
   if (priceEl) priceEl.textContent = '$—';
 
   actualizarPrecio(true);
-=======
- * Lógica del dashboard del usuario en CryptoAdvisor.
- */
-
-// Estado global del formulario
-let simboloSeleccionado = 'BTCUSDT';
-let accionSeleccionada  = 'comprar';
-
-
-// ─── SELECTORES ───────────────────────────────────────────────
-function seleccionarCripto(btn) {
-  document.querySelectorAll('.crypto-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  simboloSeleccionado = btn.dataset.symbol;
-
-  // Actualizar precio en tarjeta
-  const base = simboloSeleccionado.replace('USDT', '');
-  document.getElementById('price-symbol').textContent = base;
-  document.getElementById('price-value').textContent = '$—';
-  actualizarPrecio();
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
 }
 
 function seleccionarAccion(btn) {
@@ -68,7 +46,6 @@ function seleccionarAccion(btn) {
   accionSeleccionada = btn.dataset.accion;
 }
 
-<<<<<<< HEAD
 // ─── PRECIO EN VIVO ───────────────────────────────────────────
 async function actualizarPrecio(manual = false) {
   const el = document.getElementById('price-value');
@@ -100,28 +77,10 @@ async function actualizarPrecio(manual = false) {
   } catch (err) {
     el.textContent = '$ (sin datos)';
     if (updatedEl) updatedEl.textContent = 'No se pudo actualizar el precio';
-=======
-
-// ─── PRECIO EN VIVO ───────────────────────────────────────────
-async function actualizarPrecio() {
-  const el = document.getElementById('price-value');
-  if (!el) return;
-
-  try {
-    const data = await apiGet(`/api/precio/${simboloSeleccionado}`);
-    if (data.ok) {
-      el.textContent = formatearPrecio(data.datos.precio);
-      el.style.color = 'var(--green)';
-      setTimeout(() => { el.style.color = 'var(--accent)'; }, 1000);
-    }
-  } catch (err) {
-    el.textContent = '$ (sin datos)';
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
     console.warn('[Usuario] No se pudo obtener precio:', err.message);
   }
 }
 
-<<<<<<< HEAD
 function iniciarActualizacionAutomaticaPrecio() {
   if (intervaloPrecioId) {
     clearInterval(intervaloPrecioId);
@@ -136,8 +95,6 @@ function iniciarActualizacionAutomaticaPrecio() {
     }
   }, PRECIO_REFRESH_MS);
 }
-=======
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
 
 // ─── EJECUTAR ANÁLISIS ────────────────────────────────────────
 async function ejecutarAnalisis() {
@@ -145,10 +102,6 @@ async function ejecutarAnalisis() {
   const loading     = document.getElementById('loading');
   const resultado   = document.getElementById('resultado-section');
 
-<<<<<<< HEAD
-=======
-  // Mostrar loading
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
   btnAnalizar.disabled = true;
   loading.classList.remove('hidden');
   resultado.classList.add('hidden');
@@ -164,12 +117,8 @@ async function ejecutarAnalisis() {
     if (!data.ok) throw new Error(data.mensaje);
 
     mostrarResultado(data.datos);
-<<<<<<< HEAD
     mostrarToast('✅ Análisis completado y guardado en historial', 'success');
     actualizarPrecio(false);
-=======
-    mostrarToast('✅ Análisis completado y enviado al administrador', 'success');
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
 
   } catch (err) {
     mostrarToast(`❌ Error: ${err.message}`, 'error', 5000);
@@ -180,18 +129,10 @@ async function ejecutarAnalisis() {
   }
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
 // ─── MOSTRAR RESULTADO ────────────────────────────────────────
 function mostrarResultado(datos) {
-  const { mercado, prediccion, operacion_id, aviso_legal } = datos;
+  const { mercado, prediccion, aviso_legal } = datos;
 
-<<<<<<< HEAD
-=======
-  // Datos de mercado
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
   document.getElementById('res-precio').textContent =
     formatearPrecio(mercado.precio_actual);
 
@@ -220,7 +161,6 @@ function mostrarResultado(datos) {
   document.getElementById('res-liquidez').textContent =
     mercado.liquidez_24h_usdt !== undefined ? formatearPrecio(mercado.liquidez_24h_usdt) : '—';
 
-<<<<<<< HEAD
   const pct = prediccion.probabilidad_pct;
   const circle = document.getElementById('circle-fill');
   const circunferencia = 314;
@@ -242,6 +182,11 @@ function mostrarResultado(datos) {
     `SELL ${(Number(probs.SELL || 0) * 100).toFixed(1)}% · ` +
     `HOLD ${(Number(probs.HOLD || 0) * 100).toFixed(1)}%`;
 
+  const explicacionEl = document.getElementById('explicacion');
+  if (explicacionEl) {
+    explicacionEl.textContent = prediccion.explicacion || '';
+  }
+
   const warningEl = document.getElementById('volatilidad-warning');
   if (datos.advertencia) {
     warningEl.textContent = datos.advertencia;
@@ -252,9 +197,6 @@ function mostrarResultado(datos) {
 
   document.getElementById('aviso-legal').textContent =
     aviso_legal || 'Este sistema no ofrece asesoramiento financiero. Invierta con responsabilidad.';
-
-  document.getElementById('operacion-id').textContent =
-    'ID: #' + operacion_id;
 
   document.getElementById('resultado-section').classList.remove('hidden');
   document.getElementById('resultado-section').scrollIntoView({ behavior: 'smooth' });
@@ -290,83 +232,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-=======
-
-  // Probabilidad circular
-  const pct   = prediccion.probabilidad_pct;
-  const circle = document.getElementById('circle-fill');
-  const circunferencia = 314; // 2π × 50
-  const offset = circunferencia - (pct / 100) * circunferencia;
-
-  // Color de la barra según probabilidad
-  if (pct >= 65) {
-    circle.style.stroke = 'var(--green)';
-  } else if (pct >= 45) {
-    circle.style.stroke = 'var(--yellow)';
-  } else {
-    circle.style.stroke = 'var(--red)';
-  }
-
-  setTimeout(() => {
-    circle.style.strokeDashoffset = offset;
-  }, 100);
-
-  document.getElementById('prob-pct').textContent = pct.toFixed(1) + '%';
-
-  // Confianza badge
-  const badgeEl = document.getElementById('confianza-badge');
-  const confMap = { Alta: 'confianza-alta', Media: 'confianza-media', Baja: 'confianza-baja' };
-  badgeEl.className = `confianza-badge ${confMap[prediccion.confianza] || ''}`;
-  badgeEl.textContent = `Confianza: ${prediccion.confianza}`;
-
-  document.getElementById('recomendacion').textContent = prediccion.recomendacion;
-
-  const probs = prediccion.probabilidades || {};
-  const probsEl = document.getElementById('probabilidades-detalle');
-  if (probsEl) {
-    probsEl.textContent = `BUY ${(Number(probs.BUY || 0) * 100).toFixed(1)}% · SELL ${(Number(probs.SELL || 0) * 100).toFixed(1)}% · HOLD ${(Number(probs.HOLD || 0) * 100).toFixed(1)}%`;
-  }
-
-  const warningEl = document.getElementById('volatilidad-warning');
-  if (mercado.advertencia_volatilidad) {
-    warningEl.textContent = mercado.aviso_volatilidad || 'Advertencia: volatilidad extrema detectada.';
-    warningEl.classList.remove('hidden');
-  } else {
-    warningEl.textContent = '';
-    warningEl.classList.add('hidden');
-  }
-
-  const legalEl = document.getElementById('aviso-legal');
-  if (legalEl && aviso_legal) legalEl.textContent = aviso_legal;
-
-
-  // Estado
-  document.getElementById('operacion-id').textContent = `ID de operación: #${operacion_id}`;
-
-  // Mostrar sección
-  const seccion = document.getElementById('resultado-section');
-  seccion.classList.remove('hidden');
-
-  // Scroll al resultado
-  setTimeout(() => {
-    seccion.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 200);
-}
-
-
-// ─── INICIALIZACIÓN ───────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function () {
-  actualizarPrecio();
-
-  // Auto-actualizar precio cada 30 segundos
-  setInterval(actualizarPrecio, 30000);
-
-  // Toast container (si no existe en el HTML lo creamos)
-  if (!document.getElementById('toast-container')) {
-    const tc = document.createElement('div');
-    tc.id = 'toast-container';
-    tc.className = 'toast-container';
-    document.body.appendChild(tc);
-  }
-});
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901

@@ -27,77 +27,78 @@
   <main class="main-content">
     <header class="page-header">
       <div>
-        <h1>Panel de Monitoreo</h1>
-        <p class="subtitle">Supervisión de recomendaciones, Binance API y modelo bayesiano.</p>
+        <h1>Panel de Administración</h1>
+        <p class="subtitle">Monitoreo del sistema y reentrenamiento de la Red Bayesiana.</p>
       </div>
       <button class="btn btn-primary" onclick="consultarEstadoSistema()">Ver estado Binance</button>
     </header>
 
     <section class="analysis-panel">
       <div class="resultado-card">
-        <h3>📊 Resumen</h3>
+        <h3>📊 Resumen de recomendaciones</h3>
         <div class="metric-row"><span>Total</span><strong>{{ stats.total }}</strong></div>
-        <div class="metric-row"><span>Pendientes</span><strong>{{ stats.pendientes }}</strong></div>
-        <div class="metric-row"><span>Aprobadas</span><strong>{{ stats.aprobadas }}</strong></div>
-        <div class="metric-row"><span>Rechazadas</span><strong>{{ stats.rechazadas }}</strong></div>
-        <div class="metric-row"><span>Confianza promedio</span><strong>{{ stats.prob_promedio }}%</strong></div>
+        <div class="metric-row"><span>BUY</span><strong>{{ stats.compras or stats.buy or 0 }}</strong></div>
+        <div class="metric-row"><span>SELL</span><strong>{{ stats.ventas or stats.sell or 0 }}</strong></div>
+        <div class="metric-row"><span>HOLD</span><strong>{{ stats.esperas or stats.hold or 0 }}</strong></div>
+        <div class="metric-row"><span>Confianza promedio</span><strong>{{ stats.prob_promedio or stats.confianza_promedio or 0 }}%</strong></div>
       </div>
 
       <div class="resultado-card">
-        <h3>🧠 Modelo</h3>
-        <p>Motor activo: Naive Bayes discreto + indicadores técnicos.</p>
-        <p>Recomendaciones: BUY / SELL / HOLD según umbral de perfil.</p>
-        <p class="legal-text">No ejecuta órdenes reales. Solo emite recomendaciones para revisión humana.</p>
+        <h3>🧠 Red Bayesiana</h3>
+        <div class="metric-row"><span>Motor activo</span><strong>{{ modelo.tipo }}</strong></div>
+        <div class="metric-row"><span>Versión</span><strong>{{ modelo.version }}</strong></div>
+        <div class="metric-row"><span>Último entrenamiento</span><strong>{{ modelo.fecha_entrenamiento }}</strong></div>
+        <div class="metric-row"><span>Muestras balanceadas</span><strong>{{ modelo.total_muestras }}</strong></div>
+        <div class="metric-row"><span>Accuracy validación</span><strong>{{ modelo.accuracy_validacion_pct or 0 }}%</strong></div>
+        <div class="metric-row"><span>Baseline Accuracy</span><strong>{{ modelo.baseline_accuracy_pct or 0 }}%</strong></div>
+        {% if modelo.metrics_clases %}
+        <div class="metric-row" style="border-top: 1px dashed var(--border-color); padding-top: 5px; margin-top: 5px;">
+          <span>BUY (Prec / Recall / F1)</span>
+          <strong>{{ modelo.metrics_clases.BUY.precision_pct }}% / {{ modelo.metrics_clases.BUY.recall_pct }}% / {{ modelo.metrics_clases.BUY.f1 }}</strong>
+        </div>
+        <div class="metric-row">
+          <span>SELL (Prec / Recall / F1)</span>
+          <strong>{{ modelo.metrics_clases.SELL.precision_pct }}% / {{ modelo.metrics_clases.SELL.recall_pct }}% / {{ modelo.metrics_clases.SELL.f1 }}</strong>
+        </div>
+        <div class="metric-row" style="padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px dashed var(--border-color);">
+          <span>HOLD (Prec / Recall / F1)</span>
+          <strong>{{ modelo.metrics_clases.HOLD.precision_pct }}% / {{ modelo.metrics_clases.HOLD.recall_pct }}% / {{ modelo.metrics_clases.HOLD.f1 }}</strong>
+        </div>
+        {% endif %}
+        <div class="metric-row"><span>Estado del modelo</span><strong>{{ modelo.estado or 'Activo' }}</strong></div>
+        <div class="metric-row"><span>Pares usados</span><strong>{{ modelo.pares_usados | join(', ') if modelo.pares_usados else 'Ninguno' }}</strong></div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+          <button class="btn btn-success" onclick="reentrenarModelo()">Reentrenar modelo</button>
+          <button class="btn btn-primary" onclick="verificarResultados()">Verificar resultados (Feedback Loop)</button>
+        </div>
+        <p class="legal-text">El despliegue se considera válido si supera el Baseline, F1 Macro ≥ 55% y los recalls de BUY/SELL son ≥ 45%.</p>
+        <div id="model-status" class="alert hidden"></div>
+      </div>
+ 
+      <div class="resultado-card">
+        <h3>🔌 Estado del sistema</h3>
+        <p>Binance API, base de datos SQLite y motor bayesiano.</p>
         <div id="system-status" class="alert hidden"></div>
       </div>
     </section>
-
+ 
     <section class="resultado-card">
-      <h2>Solicitudes pendientes</h2>
-      {% if pendientes %}
-      <div class="table-responsive">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Usuario</th>
-              <th>Par</th>
-              <th>Acción</th>
-              <th>Recomendación</th>
-              <th>Confianza</th>
-              <th>Perfil</th>
-              <th>Estado mercado</th>
-              <th>Fecha</th>
-              <th>Decisión</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for op in pendientes %}
-            <tr>
-              <td>#{{ op.id }}</td>
-              <td>{{ op.username }}</td>
-              <td>{{ op.cripto }}</td>
-              <td>{{ op.accion }}</td>
-              <td><strong>{{ op.recomendacion or '—' }}</strong></td>
-              <td>{{ '%.2f'|format((op.probabilidad or 0) * 100) }}%</td>
-              <td>{{ op.perfil_riesgo or 'moderado' }}</td>
-              <td>{{ op.tendencia }} / {{ op.volumen }} / {{ op.volatilidad }}</td>
-              <td>{{ op.created_at }}</td>
-              <td>
-                <button class="btn btn-sm btn-success" onclick="resolverOperacion({{ op.id }}, 'aprobar')">Aprobar</button>
-                <button class="btn btn-sm btn-danger" onclick="resolverOperacion({{ op.id }}, 'rechazar')">Rechazar</button>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+      <h2>Nota de alcance y Documentación de Supuestos</h2>
+      <p>
+        El flujo de aprobar/rechazar operaciones fue retirado del panel principal porque el informe define que
+        CryptoAdvisor no ejecuta órdenes reales: solo genera recomendaciones BUY, SELL o HOLD.
+      </p>
+      <div style="margin-top: 15px; border-top: 1px dashed var(--border-color); padding-top: 15px;">
+        <h4 style="margin-bottom: 8px;">⚠️ Limitaciones Estadísticas y Justificación Heurística</h4>
+        <ul style="padding-left: 20px; font-size: 0.85rem; color: #a0aabf; line-height: 1.4;">
+          <li><b>Independencia Condicional (Naive Bayes):</b> Se asume independencia condicional entre las variables (ej: tendencia, volumen, volatilidad, indicadores técnicos) dado el resultado. En condiciones reales, existen correlaciones inherentes (ej: volumen alto correlaciona con volatilidad alta), lo que puede generar sesgos menores en las probabilidades calculadas.</li>
+          <li><b>Ajustes Heurísticos de Confianza:</b> Las penalizaciones aplicadas por volatilidad extrema (+0.08 a HOLD) y los umbrales de perfiles de riesgo (Agresivo: 60%, Moderado: 70%, Conservador: 80%) son aproximaciones heurísticas para control de riesgo inicial y no provienen de un calibrado óptimo formal.</li>
+        </ul>
       </div>
-      {% else %}
-        <p>No hay solicitudes pendientes.</p>
-      {% endif %}
     </section>
   </main>
-
+ 
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   <script>
     async function consultarEstadoSistema() {
@@ -107,14 +108,60 @@
       const res = await fetch('/api/admin/system_status');
       const data = await res.json();
       box.textContent = data.ok
-        ? `Binance ${data.datos.estado || 'online'} · Latencia ${data.datos.latencia_ms} ms · BTC ${data.datos.precio_btcusdt}`
+        ? `Binance online · Latencia ${data.datos.latencia_ms || '-'} ms · BTC ${data.datos.precio_btcusdt || '-'}`
         : `Error: ${data.mensaje}`;
     }
+ 
+    async function reentrenarModelo() {
+      const box = document.getElementById('model-status');
+      box.className = 'alert alert-info';
+      box.classList.remove('hidden');
+      box.textContent = 'Reentrenando modelo (esto puede tomar unos 10-15 segundos debido al Grid Search)...';
+ 
+      try {
+        const res = await fetch('/api/admin/reentrenar', { method: 'POST' });
+        const data = await res.json();
+ 
+        box.className = 'alert';
+        if (data.ok) {
+          box.classList.add('alert-success');
+          const d = data.datos;
+          box.textContent = `Modelo ${d.version} reentrenado · Accuracy ${d.accuracy_validacion_pct || 0}% · Muestras ${d.total_muestras}`;
+          setTimeout(() => window.location.reload(), 2000);
+        } else {
+          box.classList.add('alert-danger');
+          box.textContent = `Error: ${data.mensaje}`;
+        }
+      } catch (err) {
+        box.className = 'alert alert-danger';
+        box.textContent = `Error de red o del servidor: ${err}`;
+      }
+    }
 
-    async function resolverOperacion(id, accion) {
-      const url = accion === 'aprobar' ? `/api/admin/aprobar/${id}` : `/api/admin/rechazar/${id}`;
-      await fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({nota: `${accion} desde panel admin`})});
-      window.location.reload();
+    async function verificarResultados() {
+      const box = document.getElementById('model-status');
+      box.className = 'alert alert-info';
+      box.classList.remove('hidden');
+      box.textContent = 'Verificando recomendaciones pendientes con Binance...';
+ 
+      try {
+        const res = await fetch('/api/admin/verificar_resultados', { method: 'POST' });
+        const data = await res.json();
+ 
+        box.className = 'alert';
+        if (data.ok) {
+          box.classList.add('alert-success');
+          const d = data.datos;
+          box.textContent = `Éxito: ${data.mensaje} · Procesadas: ${d.procesadas} · Exitosas: ${d.exitosas} · Fallidas: ${d.fallidas}`;
+          setTimeout(() => window.location.reload(), 3000);
+        } else {
+          box.classList.add('alert-danger');
+          box.textContent = `Error: ${data.mensaje}`;
+        }
+      } catch (err) {
+        box.className = 'alert alert-danger';
+        box.textContent = `Error de red o del servidor: ${err}`;
+      }
     }
   </script>
 </body>

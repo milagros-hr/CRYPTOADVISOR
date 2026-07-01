@@ -237,18 +237,132 @@ def _volatilidad_extrema(velas: list[dict]) -> bool:
     return atr_actual > (media_atr + 3 * sd_atr)
 
 
+def _adx(velas: list[dict], period: int = 14) -> float:
+    if len(velas) < period * 2:
+        return 15.0  # Tendencia débil por defecto si hay poco historial
+    
+    tr = []
+    p_dm = []
+    m_dm = []
+    for i in range(1, len(velas)):
+        h, l = velas[i]["high"], velas[i]["low"]
+        ph, pl = velas[i-1]["high"], velas[i-1]["low"]
+        pc = velas[i-1]["close"]
+        
+        tr_val = max(h - l, abs(h - pc), abs(l - pc))
+        tr.append(tr_val)
+        
+        up = h - ph
+        down = pl - l
+        
+        if up > down and up > 0:
+            p_dm.append(up)
+        else:
+            p_dm.append(0.0)
+            
+        if down > up and down > 0:
+            m_dm.append(down)
+        else:
+            m_dm.append(0.0)
+            
+    str_val = sum(tr[:period])
+    sp_dm = sum(p_dm[:period])
+    sm_dm = sum(m_dm[:period])
+    
+    dx_values = []
+    for i in range(period, len(tr)):
+        str_val = str_val - (str_val / period) + tr[i]
+        sp_dm = sp_dm - (sp_dm / period) + p_dm[i]
+        sm_dm = sm_dm - (sm_dm / period) + m_dm[i]
+        
+        if str_val > 0:
+            p_di = (sp_dm / str_val) * 100
+            m_di = (sm_dm / str_val) * 100
+            di_diff = abs(p_di - m_di)
+            di_sum = p_di + m_di
+            dx = (di_diff / di_sum * 100) if di_sum > 0 else 0.0
+        else:
+            dx = 0.0
+        dx_values.append(dx)
+        
+    if len(dx_values) < period:
+        return 15.0
+    return float(mean(dx_values[-period:]))
+
+
 def calcular_indicadores(velas: list[dict]) -> dict:
     closes = [v["close"] for v in velas]
+    
+    rsi = _rsi(closes, 14)
+    ema20_now = _ema(closes, 20)
+    sma50_now = _sma(closes, 50)
+    vwap_val = _vwap(velas)
+    atr_val = _atr(velas, 14)
+    
+    # Pendientes de EMA y SMA
+    ema20_prev = _ema(closes[:-1], 20) if len(closes) > 1 else ema20_now
+    ema_slope = (ema20_now - ema20_prev) / ema20_prev if ema20_prev > 0 else 0.0
+    pendiente_ema = "alcista" if ema_slope > 0.0005 else ("bajista" if ema_slope < -0.0005 else "lateral")
+    
+    sma50_prev = _sma(closes[:-1], 50) if len(closes) > 1 else sma50_now
+    sma_slope = (sma50_now - sma50_prev) / sma50_prev if sma50_prev > 0 else 0.0
+    pendiente_sma = "alcista" if sma_slope > 0.0002 else ("bajista" if sma_slope < -0.0002 else "lateral")
+    
+    # Retorno porcentual
+    ret_pct = (closes[-1] - closes[-2]) / closes[-2] if len(closes) > 1 else 0.0
+    retorno_estado = "positivo" if ret_pct > 0.005 else ("negativo" if ret_pct < -0.005 else "neutral")
+    
+    # Momentum (10 períodos)
+    momentum_val = (closes[-1] - closes[-11]) / closes[-11] if len(closes) > 10 else 0.0
+    momentum_estado = "alto" if momentum_val > 0.02 else ("bajo" if momentum_val < -0.02 else "neutral")
+    
+    # ADX
+    adx_val = _adx(velas, 14)
+    adx_estado = "fuerte" if adx_val > 25 else ("debil" if adx_val < 20 else "moderado")
+    
+    macd_res = _macd(closes)
+    bb_res = _bollinger(closes, 20, 2)
+    
+    # RVOL (Volume relativo)
+    if len(velas) >= 20:
+        vols = [v["quote_volume"] for v in velas[-20:]]
+        v_sma = mean(vols)
+        rvol = velas[-1]["quote_volume"] / v_sma if v_sma > 0 else 1.0
+    else:
+        rvol = 1.0
+
+    # Volatilidad sd log retorno
+    if len(closes) >= 10:
+        retornos = []
+        for i in range(1, len(closes)):
+            if closes[i - 1] > 0:
+                retornos.append(math.log(closes[i] / closes[i - 1]))
+        sd = pstdev(retornos[-50:]) if len(retornos) >= 2 else 0.0
+    else:
+        sd = 0.01
+
+    momentum_val = (closes[-1] - closes[-11]) / closes[-11] if len(closes) > 10 else 0.0
+
     indicadores = {
         "precio_actual": closes[-1] if closes else 0.0,
-        "rsi14": _rsi(closes, 14),
-        "ema20": _ema(closes, 20),
-        "sma50": _sma(closes, 50),
-        "vwap": _vwap(velas),
-        "atr14": _atr(velas, 14),
+        "rsi14": rsi,
+        "ema20": ema20_now,
+        "sma50": sma50_now,
+        "vwap": vwap_val,
+        "atr14": atr_val,
+        "adx14": adx_val,
+        "adx_estado": adx_estado,
+        "pendiente_ema": pendiente_ema,
+        "pendiente_sma": pendiente_sma,
+        "retorno_estado": retorno_estado,
+        "momentum_estado": momentum_estado,
+        "rvol": rvol,
+        "volatilidad_sd": sd,
+        "momentum_val": momentum_val,
     }
-    indicadores.update(_macd(closes))
-    indicadores.update(_bollinger(closes, 20, 2))
+    indicadores.update(macd_res)
+    indicadores.update(bb_res)
+    
     return {k: round(v, 6) if isinstance(v, float) else v for k, v in indicadores.items()}
 
 
@@ -264,13 +378,19 @@ def _clasificar_tendencia(ind: dict) -> str:
     return "lateral"
 
 
-def _clasificar_volumen(ticker: dict) -> str:
-    qv = float(ticker.get("quoteVolume", 0))
-    if qv >= 50_000_000:
-        return "alto"
-    if qv >= 5_000_000:
+def _clasificar_volumen_relativo(velas: list[dict]) -> str:
+    if len(velas) < 20:
         return "medio"
-    return "bajo"
+    vols = [v["quote_volume"] for v in velas[-20:]]
+    sma = mean(vols)
+    if sma == 0:
+        return "medio"
+    rvol = velas[-1]["quote_volume"] / sma
+    if rvol > 1.3:
+        return "alto"
+    if rvol < 0.7:
+        return "bajo"
+    return "medio"
 
 
 def _clasificar_volatilidad(velas: list[dict]) -> str:
@@ -315,7 +435,7 @@ def analizar_mercado(symbol: str, interval: str = INTERVAL) -> dict:
         "velas": velas[-60:],
         "indicadores": indicadores,
         "tendencia": _clasificar_tendencia(indicadores),
-        "volumen": _clasificar_volumen(ticker),
+        "volumen": _clasificar_volumen_relativo(velas),
         "volatilidad": _clasificar_volatilidad(velas),
         "liquidez_suficiente": liquidez_ok,
         "mensaje_liquidez": "" if liquidez_ok else "Liquidez insuficiente para análisis confiable.",

@@ -18,10 +18,7 @@
     </div>
     <ul class="sidebar-nav">
       <li class="active"><a href="/dashboard">📊 Dashboard</a></li>
-<<<<<<< HEAD
       <li><a href="/portafolio">💼 Portafolio</a></li>
-=======
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
       <li><a href="/historial">📋 Mi Historial</a></li>
       <li><a href="/estadisticas">📈 Estadísticas</a></li>
     </ul>
@@ -55,24 +52,12 @@
 
         <div class="form-group">
           <label>Criptomoneda</label>
-<<<<<<< HEAD
           <div id="selector-criptos" style="display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 20px 0;">
             {% for cripto in criptos %}
             <button class="btn-cripto {% if loop.first %}activo{% endif %}"
                     data-symbol="{{ cripto }}"
                     onclick="seleccionarCripto('{{ cripto }}')">
               {{ cripto.replace("USDT","") }}
-=======
-          <div class="crypto-selector">
-            {% for cripto in cryptos %}
-            <button
-              class="crypto-btn {% if loop.first %}active{% endif %}"
-              data-symbol="{{ cripto }}"
-              onclick="seleccionarCripto(this)"
-            >
-              <span class="crypto-icon">{{ {'BTCUSDT':'₿','ETHUSDT':'Ξ','BNBUSDT':'◈','SOLUSDT':'◎','ADAUSDT':'₳'}.get(cripto, '?') }}</span>
-              {{ cripto | replace('USDT','') }}
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
             </button>
             {% endfor %}
           </div>
@@ -104,7 +89,6 @@
           <small>El umbral controla cuándo BUY/SELL se convierte en HOLD.</small>
         </div>
 
-<<<<<<< HEAD
         <div class="form-group info-box">
           <label>Modo de uso</label>
           <small>
@@ -120,8 +104,6 @@
           <a class="btn btn-sm btn-secondary" href="/portafolio">Abrir portafolio</a>
         </div>
 
-=======
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
         <button class="btn btn-primary btn-lg" onclick="ejecutarAnalisis()" id="btn-analizar">
           🧠 Analizar con IA Bayesiana
         </button>
@@ -138,12 +120,8 @@
           <div class="price-symbol" id="price-symbol">BTC</div>
           <div class="price-value" id="price-value">$—</div>
           <div class="price-label">Precio actual (USDT)</div>
-<<<<<<< HEAD
           <div class="price-label" id="price-updated-at">Actualización automática cada 60s</div>
           <button class="btn btn-sm" onclick="actualizarPrecio(true)">↻ Actualizar ahora</button>
-=======
-          <button class="btn btn-sm" onclick="actualizarPrecio()">↻ Actualizar</button>
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
         </div>
 
         <div class="market-hints">
@@ -153,11 +131,7 @@
             <li>Elige tu acción (comprar/vender/esperar)</li>
             <li>La IA analiza tendencia, volumen y volatilidad</li>
             <li>El modelo bayesiano calcula la probabilidad de éxito</li>
-<<<<<<< HEAD
             <li>El resultado se guarda en tu historial para trazabilidad</li>
-=======
-            <li>Tu solicitud pasa a revisión del administrador</li>
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
           </ol>
         </div>
       </div>
@@ -224,20 +198,12 @@
           <div class="confianza-badge" id="confianza-badge">—</div>
           <p class="recomendacion" id="recomendacion">—</p>
           <p class="probabilidades-detalle" id="probabilidades-detalle">BUY — · SELL — · HOLD —</p>
+          <p class="explicacion-text" id="explicacion" style="margin-top: 15px; font-size: 0.95rem; line-height: 1.4; color: var(--text-muted); text-align: justify; border-top: 1px solid var(--border-color); padding-top: 10px;"></p>
           <p class="warning-text hidden" id="volatilidad-warning"></p>
           <p class="legal-text" id="aviso-legal">
             Este sistema no ofrece asesoramiento financiero. Invierta con responsabilidad.
           </p>
         </div>
-
-        <div class="resultado-card estado-card">
-          <h3>✅ Estado de Solicitud</h3>
-          <div class="estado-icon" id="estado-icon">⏳</div>
-          <p id="estado-texto">Tu solicitud ha sido enviada al administrador para revisión.</p>
-          <div class="operacion-id" id="operacion-id">ID: —</div>
-          <a href="/historial" class="btn btn-sm btn-secondary">Ver Historial</a>
-        </div>
-
       </div>
     </section>
 

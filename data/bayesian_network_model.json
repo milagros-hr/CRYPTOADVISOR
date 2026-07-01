@@ -1,0 +1,3421 @@
+{
+  "global": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.2620506513316565,
+      "SELL": 0.3689746743341717,
+      "HOLD": 0.3689746743341717
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.14799937987118233,
+          "bajista": 0.342494327230702,
+          "lateral": 0.5095062928981157
+        },
+        "volumen": {
+          "muy_bajo": 0.17618208723839054,
+          "bajo": 0.30513705869917557,
+          "normal": 0.3298005778310197,
+          "alto": 0.13108308082587558,
+          "extremo": 0.05779719540553872
+        },
+        "volatilidad": {
+          "baja": 0.05638864616512106,
+          "media": 0.4672181977055557,
+          "alta": 0.1191053358513967,
+          "extrema": 0.35728782027792655
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.05779638085574159,
+          "sobreventa": 0.24382716049382716,
+          "neutral_bajo": 0.32768194373978243,
+          "neutral_alto": 0.2783556006539264,
+          "sobrecompra": 0.08950617283950618,
+          "sobrecompra_extrema": 0.002832741417216303
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.42493129448241845,
+          "bajo_vwap": 0.1606793037840885,
+          "neutral_vwap": 0.15081389613135088,
+          "sobre_vwap": 0.15856528785850188,
+          "muy_sobre_vwap": 0.10501021774364035
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.24524339713053528,
+          "tendencia_debil": 0.26004171716887,
+          "tendencia_media": 0.23255912281196267,
+          "tendencia_fuerte": 0.26215576288863207
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.15365904927779947,
+          "bajista": 0.3493488684023503,
+          "lateral": 0.49699208231985026
+        },
+        "volumen": {
+          "muy_bajo": 0.16566738401481407,
+          "bajo": 0.24924678444522297,
+          "normal": 0.3358290375857064,
+          "alto": 0.17617736850007507,
+          "extremo": 0.07307942545418149
+        },
+        "volatilidad": {
+          "baja": 0.04955757527226137,
+          "media": 0.44093329596412556,
+          "alta": 0.11662195707879565,
+          "extrema": 0.3928871716848174
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.049556583188196904,
+          "sobreventa": 0.22822453105919566,
+          "neutral_bajo": 0.33032050127119494,
+          "neutral_alto": 0.2612555802454307,
+          "sobrecompra": 0.12112385642503955,
+          "sobrecompra_extrema": 0.009518947810942285
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.42090986437115263,
+          "bajo_vwap": 0.14064361143085932,
+          "neutral_vwap": 0.11511936339522548,
+          "sobre_vwap": 0.13914218507582202,
+          "muy_sobre_vwap": 0.1841849757269406
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.23173246316463805,
+          "tendencia_debil": 0.2577574471492633,
+          "tendencia_media": 0.2572569666880205,
+          "tendencia_fuerte": 0.2532531229980782
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.1626677877541215,
+          "bajista": 0.2782799315335876,
+          "lateral": 0.559052280712291
+        },
+        "volumen": {
+          "muy_bajo": 0.191692107502127,
+          "bajo": 0.31480906861518443,
+          "normal": 0.2962914769030579,
+          "alto": 0.14064361143085932,
+          "extremo": 0.05656373554877133
+        },
+        "volatilidad": {
+          "baja": 0.12262772261370918,
+          "media": 0.6761591127482384,
+          "alta": 0.08208880525304293,
+          "extrema": 0.11912435938500962
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.038546233459451885,
+          "sobreventa": 0.1601605509178628,
+          "neutral_bajo": 0.3738614297439593,
+          "neutral_alto": 0.2912838067783717,
+          "sobrecompra": 0.12612856084719637,
+          "sobrecompra_extrema": 0.010019418253157969
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.24173965267003653,
+          "bajo_vwap": 0.24874630899354386,
+          "neutral_vwap": 0.18618687753365698,
+          "sobre_vwap": 0.21571492918272359,
+          "muy_sobre_vwap": 0.10761223162003905
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.3133107783472133,
+          "tendencia_debil": 0.2992973254324151,
+          "tendencia_media": 0.22772861947469572,
+          "tendencia_fuerte": 0.15966327674567585
+        }
+      }
+    },
+    "total_muestras": 5415,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.0,
+        "1": 0.241283,
+        "2": 0.201087,
+        "3": 0.292373,
+        "4": 0.32
+      },
+      "SELL": {
+        "1": 0.240437,
+        "2": 0.343832,
+        "3": 0.391129,
+        "4": 0.330739,
+        "5": 0.386139,
+        "6": 0.6
+      },
+      "HOLD": {
+        "0": 0.0,
+        "1": 0.359649,
+        "2": 0.411043,
+        "3": 0.43949,
+        "4": 0.366516,
+        "5": 0.4625,
+        "6": 0.46798,
+        "7": 0.571429
+      }
+    },
+    "accuracy": 0.4138,
+    "accuracy_pct": 41.38,
+    "accuracy_validacion": 0.4138,
+    "accuracy_validacion_pct": 41.38,
+    "balanced_accuracy": 0.3449,
+    "balanced_accuracy_pct": 34.49,
+    "f1_macro": 0.3044,
+    "f1_macro_pct": 30.44,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.2571,
+        "recall": 0.0278,
+        "f1": 0.0501
+      },
+      "SELL": {
+        "precision": 0.3424,
+        "recall": 0.2844,
+        "f1": 0.3107
+      },
+      "HOLD": {
+        "precision": 0.4471,
+        "recall": 0.7225,
+        "f1": 0.5524
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 9,
+        "SELL": 92,
+        "HOLD": 223
+      },
+      "SELL": {
+        "BUY": 12,
+        "SELL": 126,
+        "HOLD": 305
+      },
+      "HOLD": {
+        "BUY": 14,
+        "SELL": 150,
+        "HOLD": 427
+      }
+    },
+    "total_validacion": 1358,
+    "correctos_validacion": 562,
+    "baseline_accuracy": 0.4352,
+    "baseline_accuracy_pct": 43.52,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "BNBUSDT",
+      "SOLUSDT",
+      "ADAUSDT",
+      "XRPUSDT",
+      "DOGEUSDT",
+      "AVAXUSDT",
+      "LTCUSDT",
+      "DOTUSDT"
+    ],
+    "pares_oos": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "BNBUSDT",
+      "SOLUSDT",
+      "ADAUSDT",
+      "XRPUSDT",
+      "DOGEUSDT",
+      "AVAXUSDT",
+      "LTCUSDT",
+      "DOTUSDT"
+    ],
+    "desplegable": true,
+    "evaluacion_oos_real": {
+      "accuracy": 0.4008,
+      "accuracy_pct": 40.08,
+      "balanced_accuracy": 0.3801,
+      "balanced_accuracy_pct": 38.01,
+      "total_validacion": 1280,
+      "correctos": 513,
+      "f1_macro": 0.3325,
+      "metrics_per_class": {
+        "BUY": {
+          "precision": 0.5445,
+          "recall": 0.1781,
+          "f1": 0.2684
+        },
+        "SELL": {
+          "precision": 0.3918,
+          "recall": 0.7978,
+          "f1": 0.5255
+        },
+        "HOLD": {
+          "precision": 0.2676,
+          "recall": 0.1645,
+          "f1": 0.2038
+        }
+      },
+      "confusion_matrix": {
+        "BUY": {
+          "BUY": 104,
+          "SELL": 412,
+          "HOLD": 68
+        },
+        "SELL": {
+          "BUY": 58,
+          "SELL": 371,
+          "HOLD": 36
+        },
+        "HOLD": {
+          "BUY": 29,
+          "SELL": 164,
+          "HOLD": 38
+        }
+      }
+    }
+  },
+  "tipo": "Red Bayesiana discreta",
+  "version": "20260701123248",
+  "fecha_entrenamiento": "2026-07-01 12:32:48",
+  "best_N": 5,
+  "best_threshold": 0.012,
+  "best_ratio": 1.0,
+  "pares_usados": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "BNBUSDT",
+    "SOLUSDT",
+    "ADAUSDT",
+    "XRPUSDT",
+    "DOGEUSDT",
+    "AVAXUSDT",
+    "LTCUSDT",
+    "DOTUSDT"
+  ],
+  "pares_oos": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "BNBUSDT",
+    "SOLUSDT",
+    "ADAUSDT",
+    "XRPUSDT",
+    "DOGEUSDT",
+    "AVAXUSDT",
+    "LTCUSDT",
+    "DOTUSDT"
+  ],
+  "desplegable": true,
+  "BTCUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.265774895284421,
+      "SELL": 0.3671125523577895,
+      "HOLD": 0.3671125523577895
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.2034558698966627,
+          "bajista": 0.29662883279688296,
+          "lateral": 0.49991529730645434
+        },
+        "volumen": {
+          "muy_bajo": 0.2203217612193057,
+          "bajo": 0.18645215918712957,
+          "normal": 0.35580016934801023,
+          "alto": 0.18645215918712957,
+          "extremo": 0.05097375105842506
+        },
+        "volatilidad": {
+          "baja": 0.1780149051490515,
+          "media": 0.3473915989159892,
+          "alta": 0.3389227642276423,
+          "extrema": 0.13567073170731708
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.059431087030138836,
+          "sobreventa": 0.22875042329834067,
+          "neutral_bajo": 0.2880121909922113,
+          "neutral_alto": 0.3134100914324416,
+          "sobrecompra": 0.11022688791059938,
+          "sobrecompra_extrema": 0.00016931933626820184
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.3303979678238781,
+          "bajo_vwap": 0.21185436071126165,
+          "neutral_vwap": 0.15258255715495345,
+          "sobre_vwap": 0.23725656223539374,
+          "muy_sobre_vwap": 0.06790855207451313
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.21189024390243902,
+          "tendencia_debil": 0.288109756097561,
+          "tendencia_media": 0.3050474254742548,
+          "tendencia_fuerte": 0.19495257452574527
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.19023672267876854,
+          "bajista": 0.37421807923463757,
+          "lateral": 0.43554519808659387
+        },
+        "volumen": {
+          "muy_bajo": 0.16566523605150216,
+          "bajo": 0.1840588595953403,
+          "normal": 0.3312078479460454,
+          "alto": 0.23310852237890867,
+          "extremo": 0.08595953402820355
+        },
+        "volatilidad": {
+          "baja": 0.21474123129752268,
+          "media": 0.34351238655874416,
+          "alta": 0.3128525876870248,
+          "extrema": 0.12889379445670834
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.10434036292300146,
+          "sobreventa": 0.20855811672388427,
+          "neutral_bajo": 0.24534085335948996,
+          "neutral_alto": 0.28825404610102995,
+          "sobrecompra": 0.15338401177047573,
+          "sobrecompra_extrema": 0.00012260912211868564
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.3679950950337217,
+          "bajo_vwap": 0.14727161250766402,
+          "neutral_vwap": 0.1595340282035561,
+          "sobre_vwap": 0.11661557326793379,
+          "muy_sobre_vwap": 0.20858369098712448
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.14115771400539612,
+          "tendencia_debil": 0.22700515084621045,
+          "tendencia_media": 0.38030414520480743,
+          "tendencia_fuerte": 0.25153298994358597
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.16570587513798601,
+          "bajista": 0.20250214644915984,
+          "lateral": 0.6317919784128542
+        },
+        "volumen": {
+          "muy_bajo": 0.1963212752912324,
+          "bajo": 0.3373390557939914,
+          "normal": 0.276026977314531,
+          "alto": 0.12887798896382588,
+          "extremo": 0.061434702636419376
+        },
+        "volatilidad": {
+          "baja": 0.34964434633308805,
+          "media": 0.46615158204562174,
+          "alta": 0.12889379445670834,
+          "extrema": 0.05531027716458179
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.04303580186365865,
+          "sobreventa": 0.14112309955860716,
+          "neutral_bajo": 0.37408043158410986,
+          "neutral_alto": 0.24534085335948996,
+          "sobrecompra": 0.15951446787641,
+          "sobrecompra_extrema": 0.03690534575772437
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.16566523605150216,
+          "bajo_vwap": 0.29442060085836913,
+          "neutral_vwap": 0.1963212752912324,
+          "sobre_vwap": 0.22697731453096262,
+          "muy_sobre_vwap": 0.11661557326793379
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.18408143242580327,
+          "tendencia_debil": 0.28832474858964924,
+          "tendencia_media": 0.26379690949227375,
+          "tendencia_fuerte": 0.26379690949227375
+        }
+      }
+    },
+    "total_muestras": 444,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.166667,
+        "1": 0.27027,
+        "2": 0.172414,
+        "3": 0.269231,
+        "4": 0.0
+      },
+      "SELL": {
+        "0": 0.230769,
+        "1": 0.211538,
+        "2": 0.344828,
+        "3": 0.466667,
+        "4": 0.1,
+        "5": 0.285714,
+        "6": 0.4,
+        "7": 0.0,
+        "8": 0.0
+      },
+      "HOLD": {
+        "0": 0.4,
+        "1": 0.5,
+        "2": 0.545455,
+        "3": 0.733333,
+        "4": 0.315789,
+        "5": 0.576923,
+        "6": 0.571429,
+        "7": 0.5,
+        "8": 0.0,
+        "9": 0.0
+      }
+    },
+    "accuracy": 0.3926,
+    "accuracy_pct": 39.26,
+    "accuracy_validacion": 0.3926,
+    "accuracy_validacion_pct": 39.26,
+    "balanced_accuracy": 0.2717,
+    "balanced_accuracy_pct": 27.17,
+    "f1_macro": 0.2406,
+    "f1_macro_pct": 24.06,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "SELL": {
+        "precision": 0.1724,
+        "recall": 0.1389,
+        "f1": 0.1538
+      },
+      "HOLD": {
+        "precision": 0.4898,
+        "recall": 0.6761,
+        "f1": 0.568
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 0,
+        "SELL": 9,
+        "HOLD": 19
+      },
+      "SELL": {
+        "BUY": 0,
+        "SELL": 5,
+        "HOLD": 31
+      },
+      "HOLD": {
+        "BUY": 8,
+        "SELL": 15,
+        "HOLD": 48
+      }
+    },
+    "total_validacion": 135,
+    "correctos_validacion": 53,
+    "baseline_accuracy": 0.5259,
+    "baseline_accuracy_pct": 52.59,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "BTCUSDT"
+    ]
+  },
+  "ETHUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.24954718515506602,
+      "SELL": 0.37522640742246705,
+      "HOLD": 0.37522640742246705
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.1408262994224789,
+          "bajista": 0.3555456833999704,
+          "lateral": 0.5036280171775507
+        },
+        "volumen": {
+          "muy_bajo": 0.2962250185048113,
+          "bajo": 0.18519615099925982,
+          "normal": 0.34803849000740195,
+          "alto": 0.10377498149518875,
+          "extremo": 0.06676535899333827
+        },
+        "volatilidad": {
+          "baja": 0.00014806040864672785,
+          "media": 0.3925081433224756,
+          "alta": 0.15561148948771097,
+          "extrema": 0.4517323067811667
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.07415630550621669,
+          "sobreventa": 0.21477205447010064,
+          "neutral_bajo": 0.4145944345766726,
+          "neutral_alto": 0.17776791000592065,
+          "sobrecompra": 0.11856127886323267,
+          "sobrecompra_extrema": 0.00014801657785671994
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4590673575129534,
+          "bajo_vwap": 0.1925980754996299,
+          "neutral_vwap": 0.09637305699481866,
+          "sobre_vwap": 0.15558845299777943,
+          "muy_sobre_vwap": 0.09637305699481866
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.19262659164939294,
+          "tendencia_debil": 0.3777021024578028,
+          "tendencia_media": 0.2000296120817293,
+          "tendencia_fuerte": 0.22964169381107488
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.1823106470993795,
+          "bajista": 0.3743721067664729,
+          "lateral": 0.4433172461341475
+        },
+        "volumen": {
+          "muy_bajo": 0.17242737567700642,
+          "bajo": 0.18719842442146728,
+          "normal": 0.3398325947808961,
+          "alto": 0.20689315608074843,
+          "extremo": 0.09364844903988183
+        },
+        "volatilidad": {
+          "baja": 0.014870986803230254,
+          "media": 0.5023636005515068,
+          "alta": 0.14289935000984832,
+          "extrema": 0.3398660626354146
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.05425364316660102,
+          "sobreventa": 0.23148877510831037,
+          "neutral_bajo": 0.27087435998424575,
+          "neutral_alto": 0.2905671524222135,
+          "sobrecompra": 0.1281016148089799,
+          "sobrecompra_extrema": 0.024714454509649465
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.35460364352535695,
+          "bajo_vwap": 0.17242737567700642,
+          "neutral_vwap": 0.12811422944362383,
+          "sobre_vwap": 0.11826686361398327,
+          "muy_sobre_vwap": 0.22658788774002955
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.1675201890880441,
+          "tendencia_debil": 0.3300177270041363,
+          "tendencia_media": 0.27585188103210556,
+          "tendencia_fuerte": 0.226610202875714
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.1281394661676352,
+          "bajista": 0.3694474539544962,
+          "lateral": 0.5024130798778685
+        },
+        "volumen": {
+          "muy_bajo": 0.22658788774002955,
+          "bajo": 0.2807483998030527,
+          "normal": 0.2905957656326933,
+          "alto": 0.1428852781880847,
+          "extremo": 0.05918266863613983
+        },
+        "volatilidad": {
+          "baja": 9.848335631278314e-05,
+          "media": 0.8175103407524128,
+          "alta": 0.054264329328343505,
+          "extrema": 0.12812684656293086
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.03456085072863332,
+          "sobreventa": 0.24625836943678614,
+          "neutral_bajo": 0.32995273729814883,
+          "neutral_alto": 0.21179598267034266,
+          "sobrecompra": 0.1773335959038992,
+          "sobrecompra_extrema": 9.846396218983852e-05
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.23151157065484984,
+          "bajo_vwap": 0.30044313146233387,
+          "neutral_vwap": 0.15273264401772527,
+          "sobre_vwap": 0.22658788774002955,
+          "muy_sobre_vwap": 0.08872476612506154
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.24138270632263148,
+          "tendencia_debil": 0.31032105574157964,
+          "tendencia_media": 0.31032105574157964,
+          "tendencia_fuerte": 0.13797518219420918
+        }
+      }
+    },
+    "total_muestras": 541,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.191489,
+        "1": 0.133333,
+        "2": 0.227273,
+        "3": 0.4,
+        "4": 1.0
+      },
+      "SELL": {
+        "0": 0.0,
+        "1": 0.162162,
+        "2": 0.255319,
+        "3": 0.4,
+        "4": 0.428571,
+        "5": 0.142857,
+        "6": 0.666667,
+        "9": 0.5
+      },
+      "HOLD": {
+        "0": 0.5,
+        "2": 0.375,
+        "3": 0.416667,
+        "4": 0.5,
+        "5": 0.551724,
+        "6": 0.571429,
+        "7": 0.62963,
+        "8": 0.5
+      }
+    },
+    "accuracy": 0.5333,
+    "accuracy_pct": 53.33,
+    "accuracy_validacion": 0.5333,
+    "accuracy_validacion_pct": 53.33,
+    "balanced_accuracy": 0.3686,
+    "balanced_accuracy_pct": 36.86,
+    "f1_macro": 0.3365,
+    "f1_macro_pct": 33.65,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.3333,
+        "recall": 0.04,
+        "f1": 0.0714
+      },
+      "SELL": {
+        "precision": 0.3684,
+        "recall": 0.1892,
+        "f1": 0.25
+      },
+      "HOLD": {
+        "precision": 0.5664,
+        "recall": 0.8767,
+        "f1": 0.6882
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 1,
+        "SELL": 4,
+        "HOLD": 20
+      },
+      "SELL": {
+        "BUY": 1,
+        "SELL": 7,
+        "HOLD": 29
+      },
+      "HOLD": {
+        "BUY": 1,
+        "SELL": 8,
+        "HOLD": 64
+      }
+    },
+    "total_validacion": 135,
+    "correctos_validacion": 72,
+    "baseline_accuracy": 0.5407,
+    "baseline_accuracy_pct": 54.07,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "ETHUSDT"
+    ]
+  },
+  "BNBUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.28480280906093436,
+      "SELL": 0.3575985954695328,
+      "HOLD": 0.3575985954695328
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.21809709905305877,
+          "bajista": 0.2331279122200511,
+          "lateral": 0.5487749887268901
+        },
+        "volumen": {
+          "muy_bajo": 0.20300525920360632,
+          "bajo": 0.29316303531179566,
+          "normal": 0.3232156273478588,
+          "alto": 0.1053343350864012,
+          "extremo": 0.07528174305033809
+        },
+        "volatilidad": {
+          "baja": 0.19552149083258188,
+          "media": 0.390892696122633,
+          "alta": 0.18049293657950102,
+          "extrema": 0.233092876465284
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.037710336538461536,
+          "sobreventa": 0.21048677884615383,
+          "neutral_bajo": 0.28560697115384615,
+          "neutral_alto": 0.3381911057692308,
+          "sobrecompra": 0.11283052884615384,
+          "sobrecompra_extrema": 0.015174278846153846
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.2631104432757326,
+          "bajo_vwap": 0.1729526671675432,
+          "neutral_vwap": 0.18797896318557475,
+          "sobre_vwap": 0.2631104432757326,
+          "muy_sobre_vwap": 0.11284748309541698
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.15043582807333933,
+          "tendencia_debil": 0.29320709347760743,
+          "tendencia_media": 0.29320709347760743,
+          "tendencia_fuerte": 0.26314998497144576
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.23356877768466422,
+          "bajista": 0.2455405243625045,
+          "lateral": 0.5208906979528313
+        },
+        "volumen": {
+          "muy_bajo": 0.19162178336325555,
+          "bajo": 0.28737283064033514,
+          "normal": 0.3053261520047876,
+          "alto": 0.15571514063435068,
+          "extremo": 0.0599640933572711
+        },
+        "volatilidad": {
+          "baja": 0.1317931529806081,
+          "media": 0.38915489585827145,
+          "alta": 0.17368925065836724,
+          "extrema": 0.30536270050275316
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.05397319291527046,
+          "sobreventa": 0.2634035423647678,
+          "neutral_bajo": 0.2693872666347535,
+          "neutral_alto": 0.23348492101483964,
+          "sobrecompra": 0.14372905696505506,
+          "sobrecompra_extrema": 0.036022020105313544
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.41903052064631957,
+          "bajo_vwap": 0.13177737881508078,
+          "neutral_vwap": 0.11382405745062837,
+          "sobre_vwap": 0.11382405745062837,
+          "muy_sobre_vwap": 0.22154398563734293
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.22157050514723486,
+          "tendencia_debil": 0.2993775436916447,
+          "tendencia_media": 0.2993775436916447,
+          "tendencia_fuerte": 0.1796744074694757
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.22758290434574405,
+          "bajista": 0.185681790973303,
+          "lateral": 0.5867353046809529
+        },
+        "volumen": {
+          "muy_bajo": 0.16768402154398565,
+          "bajo": 0.3113105924596051,
+          "normal": 0.3532016756433274,
+          "alto": 0.11980849790544584,
+          "extremo": 0.047995212447636146
+        },
+        "volatilidad": {
+          "baja": 0.44900646396935595,
+          "media": 0.36521426861383766,
+          "alta": 0.08989705530284893,
+          "extrema": 0.09588221211395738
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.036022020105313544,
+          "sobreventa": 0.1197941598851125,
+          "neutral_bajo": 0.3651268549545237,
+          "neutral_alto": 0.31127333652465294,
+          "sobrecompra": 0.1556965055050263,
+          "sobrecompra_extrema": 0.01208712302537099
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.18563734290843806,
+          "bajo_vwap": 0.2335128665469779,
+          "neutral_vwap": 0.2335128665469779,
+          "sobre_vwap": 0.25745062836624777,
+          "muy_sobre_vwap": 0.08988629563135847
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.23354081876945176,
+          "tendencia_debil": 0.3113478573138616,
+          "tendencia_media": 0.3233181709360785,
+          "tendencia_fuerte": 0.1317931529806081
+        }
+      }
+    },
+    "total_muestras": 467,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "1": 0.0,
+        "2": 0.239437,
+        "3": 0.035714,
+        "4": 0.111111,
+        "5": 0.0
+      },
+      "SELL": {
+        "1": 0.283333,
+        "2": 0.314286,
+        "3": 0.166667,
+        "4": 0.0,
+        "5": 0.6,
+        "6": 0.222222,
+        "7": 0.0
+      },
+      "HOLD": {
+        "0": 0.8,
+        "1": 0.571429,
+        "2": 0.357143,
+        "3": 0.590909,
+        "4": 0.56,
+        "5": 0.586957,
+        "6": 0.666667
+      }
+    },
+    "accuracy": 0.4191,
+    "accuracy_pct": 41.91,
+    "accuracy_validacion": 0.4191,
+    "accuracy_validacion_pct": 41.91,
+    "balanced_accuracy": 0.3136,
+    "balanced_accuracy_pct": 31.36,
+    "f1_macro": 0.3152,
+    "f1_macro_pct": 31.52,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.0833,
+        "recall": 0.1,
+        "f1": 0.0909
+      },
+      "SELL": {
+        "precision": 0.2857,
+        "recall": 0.2564,
+        "f1": 0.2703
+      },
+      "HOLD": {
+        "precision": 0.5844,
+        "recall": 0.5844,
+        "f1": 0.5844
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 2,
+        "SELL": 7,
+        "HOLD": 11
+      },
+      "SELL": {
+        "BUY": 8,
+        "SELL": 10,
+        "HOLD": 21
+      },
+      "HOLD": {
+        "BUY": 14,
+        "SELL": 18,
+        "HOLD": 45
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 57,
+    "baseline_accuracy": 0.5662,
+    "baseline_accuracy_pct": 56.62,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "BNBUSDT"
+    ]
+  },
+  "SOLUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.2762494015394248,
+      "SELL": 0.38857584797259975,
+      "HOLD": 0.3351747504879756
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.19338931094228975,
+          "bajista": 0.320005331200853,
+          "lateral": 0.4866053578568572
+        },
+        "volumen": {
+          "muy_bajo": 0.1133910726182545,
+          "bajo": 0.35323117921385744,
+          "normal": 0.37321785476349106,
+          "alto": 0.13337774816788808,
+          "extremo": 0.026782145236508993
+        },
+        "volatilidad": {
+          "baja": 0.03344882729211087,
+          "media": 0.43989872068230274,
+          "alta": 0.10674307036247334,
+          "extrema": 0.419909381663113
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.06674660271782573,
+          "sobreventa": 0.21329602984279245,
+          "neutral_bajo": 0.30655475619504396,
+          "neutral_alto": 0.2998934185984546,
+          "sobrecompra": 0.1000532907007727,
+          "sobrecompra_extrema": 0.013455901945110578
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.39320453031312463,
+          "bajo_vwap": 0.14670219853431046,
+          "neutral_vwap": 0.1267155229846769,
+          "sobre_vwap": 0.16668887408394403,
+          "muy_sobre_vwap": 0.16668887408394403
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.20002665245202556,
+          "tendencia_debil": 0.3132995735607676,
+          "tendencia_media": 0.17337420042643922,
+          "tendencia_fuerte": 0.3132995735607676
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.15171041410025587,
+          "bajista": 0.37439590637733344,
+          "lateral": 0.4738936795224107
+        },
+        "volumen": {
+          "muy_bajo": 0.13273330175272383,
+          "bajo": 0.2748460445286594,
+          "normal": 0.3269540502131691,
+          "alto": 0.20378967314069163,
+          "extremo": 0.06167693036475604
+        },
+        "volatilidad": {
+          "baja": 9.475080538184574e-05,
+          "media": 0.4927989387909797,
+          "alta": 0.12327079780178131,
+          "extrema": 0.38383551260185705
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.06640773020083364,
+          "sobreventa": 0.25113679424024254,
+          "neutral_bajo": 0.3221864342553997,
+          "neutral_alto": 0.21324365289882533,
+          "sobrecompra": 0.1469306555513452,
+          "sobrecompra_extrema": 9.473285335354301e-05
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4501184272856466,
+          "bajo_vwap": 0.13747039317858833,
+          "neutral_vwap": 0.06641402179062056,
+          "sobre_vwap": 0.13747039317858833,
+          "muy_sobre_vwap": 0.20852676456655617
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.22749668372181164,
+          "tendencia_debil": 0.2796096266818268,
+          "tendencia_media": 0.19433390183816562,
+          "tendencia_fuerte": 0.2985597877581959
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.12094913764692958,
+          "bajista": 0.3077007579918708,
+          "lateral": 0.5713501043611996
+        },
+        "volumen": {
+          "muy_bajo": 0.19231191652937948,
+          "bajo": 0.34058209774848985,
+          "normal": 0.27468423942888526,
+          "alto": 0.142888522789676,
+          "extremo": 0.049533223503569465
+        },
+        "volatilidad": {
+          "baja": 0.055030755711775035,
+          "media": 0.7635105448154658,
+          "alta": 0.06052284710017574,
+          "extrema": 0.12093585237258347
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.022073358225345924,
+          "sobreventa": 0.18130902701515486,
+          "neutral_bajo": 0.3789808917197452,
+          "neutral_alto": 0.2911267296288162,
+          "sobrecompra": 0.10992752031627498,
+          "sobrecompra_extrema": 0.016582473094662858
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.23624382207578257,
+          "bajo_vwap": 0.2691927512355849,
+          "neutral_vwap": 0.22526084568918178,
+          "sobre_vwap": 0.10444810543657332,
+          "muy_sobre_vwap": 0.16485447556287755
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.351603690685413,
+          "tendencia_debil": 0.1868409490333919,
+          "tendencia_media": 0.2802065026362039,
+          "tendencia_fuerte": 0.18134885764499123
+        }
+      }
+    },
+    "total_muestras": 543,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.454545,
+        "1": 0.375,
+        "2": 0.403509,
+        "3": 0.3,
+        "4": 0.5,
+        "5": 0.25
+      },
+      "SELL": {
+        "0": 0.375,
+        "1": 0.35,
+        "2": 0.242424,
+        "3": 0.230769,
+        "4": 0.230769,
+        "5": 0.413793,
+        "6": 0.5,
+        "7": 0.0
+      },
+      "HOLD": {
+        "1": 0.407407,
+        "2": 0.3125,
+        "3": 0.25,
+        "4": 0.25,
+        "5": 0.285714,
+        "6": 0.333333,
+        "7": 0.230769,
+        "8": 0.6
+      }
+    },
+    "accuracy": 0.3162,
+    "accuracy_pct": 31.62,
+    "accuracy_validacion": 0.3162,
+    "accuracy_validacion_pct": 31.62,
+    "balanced_accuracy": 0.3367,
+    "balanced_accuracy_pct": 33.67,
+    "f1_macro": 0.289,
+    "f1_macro_pct": 28.9,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.3,
+        "recall": 0.0577,
+        "f1": 0.0968
+      },
+      "SELL": {
+        "precision": 0.3846,
+        "recall": 0.4762,
+        "f1": 0.4255
+      },
+      "HOLD": {
+        "precision": 0.2703,
+        "recall": 0.4762,
+        "f1": 0.3448
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 3,
+        "SELL": 13,
+        "HOLD": 36
+      },
+      "SELL": {
+        "BUY": 4,
+        "SELL": 20,
+        "HOLD": 18
+      },
+      "HOLD": {
+        "BUY": 3,
+        "SELL": 19,
+        "HOLD": 20
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 43,
+    "baseline_accuracy": 0.3824,
+    "baseline_accuracy_pct": 38.24,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "SOLUSDT"
+    ]
+  },
+  "ADAUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.26888373292085593,
+      "SELL": 0.4125142709829485,
+      "HOLD": 0.31860199609619566
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.09598795015746953,
+          "bajista": 0.36300150623031635,
+          "lateral": 0.5410105436122141
+        },
+        "volumen": {
+          "muy_bajo": 0.18494182067077344,
+          "bajo": 0.3423682409308693,
+          "normal": 0.2944558521560575,
+          "alto": 0.09596167008898016,
+          "extremo": 0.08227241615331965
+        },
+        "volatilidad": {
+          "baja": 0.00013691128148959474,
+          "media": 0.4382530120481927,
+          "alta": 0.14389375684556405,
+          "extrema": 0.41771631982475355
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.061730084861757455,
+          "sobreventa": 0.27388447851081305,
+          "neutral_bajo": 0.2396660279222557,
+          "neutral_alto": 0.3696961401587736,
+          "sobrecompra": 0.05488639474404598,
+          "sobrecompra_extrema": 0.0001368738023542294
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4929500342231348,
+          "bajo_vwap": 0.13702943189596167,
+          "neutral_vwap": 0.12334017796030117,
+          "sobre_vwap": 0.13702943189596167,
+          "muy_sobre_vwap": 0.10965092402464066
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.41771631982475355,
+          "tendencia_debil": 0.11651150054764511,
+          "tendencia_media": 0.16443044906900328,
+          "tendencia_fuerte": 0.30134173055859803
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.10720342765330715,
+          "bajista": 0.37052575203070603,
+          "lateral": 0.5222708203159868
+        },
+        "volumen": {
+          "muy_bajo": 0.16519410977242305,
+          "bajo": 0.2544399821508255,
+          "normal": 0.33029897367246763,
+          "alto": 0.1741186970102633,
+          "extremo": 0.07594823739402053
+        },
+        "volatilidad": {
+          "baja": 8.925383791503034e-05,
+          "media": 0.46420921099607276,
+          "alta": 0.07595501606569081,
+          "extrema": 0.45974651910032127
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.049170087453150095,
+          "sobreventa": 0.20979832232732465,
+          "neutral_bajo": 0.3882741388541852,
+          "neutral_alto": 0.2633410672853828,
+          "sobrecompra": 0.08932714617169374,
+          "sobrecompra_extrema": 8.92379082634303e-05
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4284694332887104,
+          "bajo_vwap": 0.1250334672021419,
+          "neutral_vwap": 0.13395805443998215,
+          "sobre_vwap": 0.1562695225345828,
+          "muy_sobre_vwap": 0.1562695225345828
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.3347911460192788,
+          "tendencia_debil": 0.1473580863977151,
+          "tendencia_media": 0.25,
+          "tendencia_fuerte": 0.2678507675830061
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.12146076505258291,
+          "bajista": 0.3237027620478447,
+          "lateral": 0.5548364728995724
+        },
+        "volumen": {
+          "muy_bajo": 0.17342576545349508,
+          "bajo": 0.323627960716349,
+          "normal": 0.31207394569612945,
+          "alto": 0.127209705372617,
+          "extremo": 0.06366262276140959
+        },
+        "volatilidad": {
+          "baja": 0.0001155535012710885,
+          "media": 0.7801016870811186,
+          "alta": 0.06944765426392419,
+          "extrema": 0.15033510515368614
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.03477356746765249,
+          "sobreventa": 0.21384011090573013,
+          "neutral_bajo": 0.3640249537892791,
+          "neutral_alto": 0.3004852125693161,
+          "sobrecompra": 0.08676062846580407,
+          "sobrecompra_extrema": 0.0001155268022181146
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.30629693818601966,
+          "bajo_vwap": 0.24274985557481227,
+          "neutral_vwap": 0.17920277296360484,
+          "sobre_vwap": 0.1907567879838244,
+          "muy_sobre_vwap": 0.08099364529173889
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.45077420845851623,
+          "tendencia_debil": 0.22544488097989368,
+          "tendencia_media": 0.17344580540790386,
+          "tendencia_fuerte": 0.15033510515368614
+        }
+      }
+    },
+    "total_muestras": 543,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.6,
+        "1": 0.277778,
+        "2": 0.275862,
+        "3": 0.103448,
+        "4": 0.285714,
+        "5": 0.142857,
+        "6": 0.0
+      },
+      "SELL": {
+        "1": 0.5,
+        "2": 0.344828,
+        "3": 0.354167,
+        "4": 0.473684,
+        "5": 0.466667,
+        "6": 1.0,
+        "7": 1.0
+      },
+      "HOLD": {
+        "1": 0.333333,
+        "2": 0.290323,
+        "3": 0.3,
+        "4": 0.44,
+        "5": 0.428571,
+        "6": 0.285714,
+        "7": 0.0
+      }
+    },
+    "accuracy": 0.3897,
+    "accuracy_pct": 38.97,
+    "accuracy_validacion": 0.3897,
+    "accuracy_validacion_pct": 38.97,
+    "balanced_accuracy": 0.3683,
+    "balanced_accuracy_pct": 36.83,
+    "f1_macro": 0.3681,
+    "f1_macro_pct": 36.81,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.2059,
+        "recall": 0.2059,
+        "f1": 0.2059
+      },
+      "SELL": {
+        "precision": 0.5098,
+        "recall": 0.4643,
+        "f1": 0.486
+      },
+      "HOLD": {
+        "precision": 0.3922,
+        "recall": 0.4348,
+        "f1": 0.4124
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 7,
+        "SELL": 11,
+        "HOLD": 16
+      },
+      "SELL": {
+        "BUY": 15,
+        "SELL": 26,
+        "HOLD": 15
+      },
+      "HOLD": {
+        "BUY": 12,
+        "SELL": 14,
+        "HOLD": 20
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 53,
+    "baseline_accuracy": 0.4118,
+    "baseline_accuracy_pct": 41.18,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "ADAUSDT"
+    ]
+  },
+  "XRPUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.25556419657075147,
+      "SELL": 0.3722179017146244,
+      "HOLD": 0.3722179017146244
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.18846878168912068,
+          "bajista": 0.3912791539910184,
+          "lateral": 0.42025206431986095
+        },
+        "volumen": {
+          "muy_bajo": 0.10152063721940623,
+          "bajo": 0.3404779145546706,
+          "normal": 0.31151339608979006,
+          "alto": 0.17393193338160753,
+          "extremo": 0.07255611875452571
+        },
+        "volatilidad": {
+          "baja": 0.11601969872537658,
+          "media": 0.4636442641946697,
+          "alta": 0.07980880648899188,
+          "extrema": 0.34052723059096174
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.04358528815522733,
+          "sobreventa": 0.2825079640891978,
+          "neutral_bajo": 0.36214885606718794,
+          "neutral_alto": 0.16666666666666666,
+          "sobrecompra": 0.14494642339994207,
+          "sobrecompra_extrema": 0.0001448016217781639
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.45633598841419265,
+          "bajo_vwap": 0.1666908037653874,
+          "neutral_vwap": 0.10876176683562636,
+          "sobre_vwap": 0.15220854453294713,
+          "muy_sobre_vwap": 0.11600289645184649
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.1739571263035921,
+          "tendencia_debil": 0.2101680185399768,
+          "tendencia_media": 0.3839803012746234,
+          "tendencia_fuerte": 0.23189455388180766
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.13936138466129513,
+          "bajista": 0.37312245100964886,
+          "lateral": 0.487516164329056
+        },
+        "volumen": {
+          "muy_bajo": 0.1592242665340627,
+          "bajo": 0.24873197414221782,
+          "normal": 0.3531576330183988,
+          "alto": 0.16419691695673796,
+          "extremo": 0.0746892093485828
+        },
+        "volatilidad": {
+          "baja": 0.08961607320469464,
+          "media": 0.40292420926994227,
+          "alta": 0.04485776805251641,
+          "extrema": 0.46260194947284655
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.03987669053301511,
+          "sobreventa": 0.22881861575179,
+          "neutral_bajo": 0.3133452665075577,
+          "neutral_alto": 0.2984287987271281,
+          "sobrecompra": 0.10451471758154335,
+          "sobrecompra_extrema": 0.015015910898965791
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.3531576330183988,
+          "bajo_vwap": 0.22884137245151667,
+          "neutral_vwap": 0.12938836399801093,
+          "sobre_vwap": 0.14927896568871207,
+          "muy_sobre_vwap": 0.13933366484336152
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.19405211855977722,
+          "tendencia_debil": 0.32832703401631186,
+          "tendencia_media": 0.24378356872886414,
+          "tendencia_fuerte": 0.23383727869504675
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.12941410524221625,
+          "bajista": 0.28857057594747837,
+          "lateral": 0.5820153188103053
+        },
+        "volumen": {
+          "muy_bajo": 0.2139234211834908,
+          "bajo": 0.2885131775236201,
+          "normal": 0.29845847836897066,
+          "alto": 0.1592242665340627,
+          "extremo": 0.039880656389855794
+        },
+        "volatilidad": {
+          "baja": 0.14432066839069027,
+          "media": 0.6615277501491944,
+          "alta": 0.08961607320469464,
+          "extrema": 0.10453550825542073
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.03987669053301511,
+          "sobreventa": 0.14926412092283214,
+          "neutral_bajo": 0.4376491646778043,
+          "neutral_alto": 0.2835123309466985,
+          "sobrecompra": 0.08462609387430389,
+          "sobrecompra_extrema": 0.005071599045346062
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.2238687220288414,
+          "bajo_vwap": 0.24375932371954254,
+          "neutral_vwap": 0.24375932371954254,
+          "sobre_vwap": 0.24375932371954254,
+          "muy_sobre_vwap": 0.04485330681253108
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.3681121941515814,
+          "tendencia_debil": 0.2835687288641337,
+          "tendencia_media": 0.24378356872886414,
+          "tendencia_fuerte": 0.10453550825542073
+        }
+      }
+    },
+    "total_muestras": 540,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.222222,
+        "1": 0.147059,
+        "2": 0.157895,
+        "3": 0.210526,
+        "4": 0.333333,
+        "5": 0.214286,
+        "6": 0.5
+      },
+      "SELL": {
+        "0": 0.0,
+        "1": 0.290323,
+        "2": 0.315789,
+        "3": 0.410256,
+        "4": 0.263158,
+        "5": 0.4,
+        "9": 1.0
+      },
+      "HOLD": {
+        "0": 0.5,
+        "1": 0.28,
+        "2": 0.411765,
+        "3": 0.25,
+        "4": 0.454545,
+        "5": 0.454545,
+        "6": 0.692308,
+        "7": 0.590909,
+        "8": 0.142857,
+        "9": 0.0
+      }
+    },
+    "accuracy": 0.4559,
+    "accuracy_pct": 45.59,
+    "accuracy_validacion": 0.4559,
+    "accuracy_validacion_pct": 45.59,
+    "balanced_accuracy": 0.4061,
+    "balanced_accuracy_pct": 40.61,
+    "f1_macro": 0.3959,
+    "f1_macro_pct": 39.59,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.2759,
+        "recall": 0.2857,
+        "f1": 0.2807
+      },
+      "SELL": {
+        "precision": 0.4231,
+        "recall": 0.2391,
+        "f1": 0.3056
+      },
+      "HOLD": {
+        "precision": 0.5309,
+        "recall": 0.6935,
+        "f1": 0.6014
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 8,
+        "SELL": 6,
+        "HOLD": 14
+      },
+      "SELL": {
+        "BUY": 11,
+        "SELL": 11,
+        "HOLD": 24
+      },
+      "HOLD": {
+        "BUY": 10,
+        "SELL": 9,
+        "HOLD": 43
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 62,
+    "baseline_accuracy": 0.4559,
+    "baseline_accuracy_pct": 45.59,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "XRPUSDT"
+    ]
+  },
+  "DOGEUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.303870658859058,
+      "SELL": 0.3591131734983244,
+      "HOLD": 0.3370161676426178
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.1697564521992003,
+          "bajista": 0.3393917363383012,
+          "lateral": 0.49085181146249846
+        },
+        "volumen": {
+          "muy_bajo": 0.19394306480920656,
+          "bajo": 0.3090248334342823,
+          "normal": 0.2726832222895215,
+          "alto": 0.15154451847365233,
+          "extremo": 0.07280436099333737
+        },
+        "volatilidad": {
+          "baja": 0.00012115338017930699,
+          "media": 0.6240610613036103,
+          "alta": 0.03040949842500605,
+          "extrema": 0.34540828689120423
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.03040213178294573,
+          "sobreventa": 0.23631298449612403,
+          "neutral_bajo": 0.3150436046511628,
+          "neutral_alto": 0.3634932170542636,
+          "sobrecompra": 0.05462693798449612,
+          "sobrecompra_extrema": 0.00012112403100775194
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4059357964869776,
+          "bajo_vwap": 0.13337371290127195,
+          "neutral_vwap": 0.2181708055723804,
+          "sobre_vwap": 0.13943064809206543,
+          "muy_sobre_vwap": 0.10308903694730466
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.26665858977465473,
+          "tendencia_debil": 0.18790889265810515,
+          "tendencia_media": 0.254543251756724,
+          "tendencia_fuerte": 0.2908892658105161
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.1436481082743771,
+          "bajista": 0.25643391776889163,
+          "lateral": 0.5999179739567312
+        },
+        "volumen": {
+          "muy_bajo": 0.1846232701178883,
+          "bajo": 0.26150691952844696,
+          "normal": 0.31788826242952334,
+          "alto": 0.1538698103536648,
+          "extremo": 0.08211173757047668
+        },
+        "volatilidad": {
+          "baja": 0.00010252204223908139,
+          "media": 0.4614517121181053,
+          "alta": 0.0308591347139635,
+          "extrema": 0.507586631125692
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.02060270602706027,
+          "sobreventa": 0.21535465354653546,
+          "neutral_bajo": 0.3742312423124231,
+          "neutral_alto": 0.230729807298073,
+          "sobrecompra": 0.1589790897908979,
+          "sobrecompra_extrema": 0.0001025010250102501
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.45115325474115836,
+          "bajo_vwap": 0.12311635058944131,
+          "neutral_vwap": 0.09236289082521784,
+          "sobre_vwap": 0.16924654023577654,
+          "muy_sobre_vwap": 0.16412096360840597
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.20002050440844782,
+          "tendencia_debil": 0.20002050440844782,
+          "tendencia_media": 0.2769120360877589,
+          "tendencia_fuerte": 0.3230469550953455
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.147601879165301,
+          "bajista": 0.25139298590626025,
+          "lateral": 0.6010051349284388
+        },
+        "volumen": {
+          "muy_bajo": 0.2349535772801748,
+          "bajo": 0.3441835062807209,
+          "normal": 0.21310759148006556,
+          "alto": 0.14756963407973786,
+          "extremo": 0.06018569087930093
+        },
+        "volatilidad": {
+          "baja": 0.00010924186148131964,
+          "media": 0.7702643653047848,
+          "alta": 0.04380598645400917,
+          "extrema": 0.18582040637972472
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.027413717780690256,
+          "sobreventa": 0.14755351681957185,
+          "neutral_bajo": 0.36052861511577106,
+          "neutral_alto": 0.32776321537789427,
+          "sobrecompra": 0.13663171690694625,
+          "sobrecompra_extrema": 0.00010921799912625601
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.3059530311305298,
+          "bajo_vwap": 0.14756963407973786,
+          "neutral_vwap": 0.16941561987984707,
+          "sobre_vwap": 0.2786455488803933,
+          "muy_sobre_vwap": 0.09841616602949207
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.35514529167577014,
+          "tendencia_debil": 0.28960017478697836,
+          "tendencia_media": 0.1530478479353288,
+          "tendencia_fuerte": 0.20220668560192265
+        }
+      }
+    },
+    "total_muestras": 543,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.0,
+        "1": 0.071429,
+        "2": 0.15625,
+        "3": 0.128205,
+        "4": 0.190476,
+        "5": 0.363636
+      },
+      "SELL": {
+        "0": 0.363636,
+        "1": 0.341463,
+        "2": 0.484848,
+        "3": 0.241379,
+        "4": 0.285714,
+        "5": 0.8,
+        "6": 0.666667
+      },
+      "HOLD": {
+        "1": 0.352941,
+        "2": 0.65,
+        "3": 0.384615,
+        "4": 0.47619,
+        "5": 0.5,
+        "6": 0.5,
+        "7": 0.5
+      }
+    },
+    "accuracy": 0.4044,
+    "accuracy_pct": 40.44,
+    "accuracy_validacion": 0.4044,
+    "accuracy_validacion_pct": 40.44,
+    "balanced_accuracy": 0.3972,
+    "balanced_accuracy_pct": 39.72,
+    "f1_macro": 0.356,
+    "f1_macro_pct": 35.6,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.2308,
+        "recall": 0.45,
+        "f1": 0.3051
+      },
+      "SELL": {
+        "precision": 0.3478,
+        "recall": 0.1569,
+        "f1": 0.2162
+      },
+      "HOLD": {
+        "precision": 0.5135,
+        "recall": 0.5846,
+        "f1": 0.5468
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 9,
+        "SELL": 3,
+        "HOLD": 8
+      },
+      "SELL": {
+        "BUY": 15,
+        "SELL": 8,
+        "HOLD": 28
+      },
+      "HOLD": {
+        "BUY": 15,
+        "SELL": 12,
+        "HOLD": 38
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 55,
+    "baseline_accuracy": 0.4779,
+    "baseline_accuracy_pct": 47.79,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "DOGEUSDT"
+    ]
+  },
+  "AVAXUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.2799322358487092,
+      "SELL": 0.3793687621993887,
+      "HOLD": 0.3406990019519022
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.11850585295278179,
+          "bajista": 0.3486781533605156,
+          "lateral": 0.5328159936867026
+        },
+        "volumen": {
+          "muy_bajo": 0.11847468770545694,
+          "bajo": 0.3617357001972387,
+          "normal": 0.31571334648257726,
+          "alto": 0.16449704142011834,
+          "extremo": 0.03957922419460881
+        },
+        "volatilidad": {
+          "baja": 0.0001315097317201473,
+          "media": 0.5064439768542871,
+          "alta": 0.06588637559179378,
+          "extrema": 0.4275381378221988
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.06586905074940835,
+          "sobreventa": 0.22363923218511703,
+          "neutral_bajo": 0.34196686826189854,
+          "neutral_alto": 0.27622929266368657,
+          "sobrecompra": 0.09216408098869314,
+          "sobrecompra_extrema": 0.00013147515119642388
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.44063116370808675,
+          "bajo_vwap": 0.15134779750164365,
+          "neutral_vwap": 0.16449704142011834,
+          "sobre_vwap": 0.12504930966469427,
+          "muy_sobre_vwap": 0.11847468770545694
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.32890583903208837,
+          "tendencia_debil": 0.26315097317201475,
+          "tendencia_media": 0.1710941609679116,
+          "tendencia_fuerte": 0.23684902682798528
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.16024458895467342,
+          "bajista": 0.32524507425021837,
+          "lateral": 0.5145103367951082
+        },
+        "volumen": {
+          "muy_bajo": 0.17962154294032026,
+          "bajo": 0.2572537603105289,
+          "normal": 0.33973799126637555,
+          "alto": 0.1844735565259583,
+          "extremo": 0.03891314895681708
+        },
+        "volatilidad": {
+          "baja": 9.704968944099378e-05,
+          "media": 0.4707880434782608,
+          "alta": 0.04862189440993788,
+          "extrema": 0.4804930124223602
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.048612458761886274,
+          "sobreventa": 0.2620803415486125,
+          "neutral_bajo": 0.3591111973607607,
+          "neutral_alto": 0.21841645643314575,
+          "sobrecompra": 0.10197942945856782,
+          "sobrecompra_extrema": 0.009800116437026975
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.504706453178069,
+          "bajo_vwap": 0.07287724405628336,
+          "neutral_vwap": 0.09713731198447356,
+          "sobre_vwap": 0.1747695293546822,
+          "muy_sobre_vwap": 0.150509461426492
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.2718361801242236,
+          "tendencia_debil": 0.20390139751552797,
+          "tendencia_media": 0.22331133540372672,
+          "tendencia_fuerte": 0.30095108695652173
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.20004322922295473,
+          "bajista": 0.2865016751323895,
+          "lateral": 0.5134550956446557
+        },
+        "volumen": {
+          "muy_bajo": 0.2162074554294976,
+          "bajo": 0.3080497028633172,
+          "normal": 0.2702323068611562,
+          "alto": 0.12436520799567802,
+          "extremo": 0.08114532685035117
+        },
+        "volatilidad": {
+          "baja": 0.00010806137886319428,
+          "media": 0.8051653339096607,
+          "alta": 0.05413875081046034,
+          "extrema": 0.14058785390101577
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.02171564390665514,
+          "sobreventa": 0.14595937770095072,
+          "neutral_bajo": 0.39984874675885906,
+          "neutral_alto": 0.31882022471910115,
+          "sobrecompra": 0.11354796888504753,
+          "sobrecompra_extrema": 0.000108038029386344
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.2648298217179903,
+          "bajo_vwap": 0.22160994057266345,
+          "neutral_vwap": 0.16218260399783901,
+          "sobre_vwap": 0.2,
+          "muy_sobre_vwap": 0.1513776337115073
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.4215474389453209,
+          "tendencia_debil": 0.32429219796844605,
+          "tendencia_media": 0.1567970607304949,
+          "tendencia_fuerte": 0.09736330235573805
+        }
+      }
+    },
+    "total_muestras": 543,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.25,
+        "1": 0.297872,
+        "2": 0.395833,
+        "3": 0.307692,
+        "4": 0.75,
+        "5": 0.666667
+      },
+      "SELL": {
+        "0": 1.0,
+        "1": 0.326923,
+        "2": 0.311111,
+        "3": 0.4,
+        "4": 0.384615,
+        "5": 0.166667,
+        "6": 0.0
+      },
+      "HOLD": {
+        "0": 0.0,
+        "1": 0.142857,
+        "2": 0.3125,
+        "3": 0.428571,
+        "4": 0.521739,
+        "5": 0.214286,
+        "6": 0.21875,
+        "7": 0.352941,
+        "8": 0.5
+      }
+    },
+    "accuracy": 0.3088,
+    "accuracy_pct": 30.88,
+    "accuracy_validacion": 0.3088,
+    "accuracy_validacion_pct": 30.88,
+    "balanced_accuracy": 0.3252,
+    "balanced_accuracy_pct": 32.52,
+    "f1_macro": 0.2507,
+    "f1_macro_pct": 25.07,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.4444,
+        "recall": 0.0833,
+        "f1": 0.1404
+      },
+      "SELL": {
+        "precision": 0.2727,
+        "recall": 0.1304,
+        "f1": 0.1765
+      },
+      "HOLD": {
+        "precision": 0.3048,
+        "recall": 0.7619,
+        "f1": 0.4354
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 4,
+        "SELL": 9,
+        "HOLD": 35
+      },
+      "SELL": {
+        "BUY": 2,
+        "SELL": 6,
+        "HOLD": 38
+      },
+      "HOLD": {
+        "BUY": 3,
+        "SELL": 7,
+        "HOLD": 32
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 42,
+    "baseline_accuracy": 0.3529,
+    "baseline_accuracy_pct": 35.29,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "AVAXUSDT"
+    ]
+  },
+  "LTCUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.253915556770691,
+      "SELL": 0.3730422216146546,
+      "HOLD": 0.3730422216146546
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.08473012455789634,
+          "bajista": 0.4537905582039059,
+          "lateral": 0.4614793172381978
+        },
+        "volumen": {
+          "muy_bajo": 0.15388162951575712,
+          "bajo": 0.33066871637202155,
+          "normal": 0.3998462720983859,
+          "alto": 0.09239046887009993,
+          "extremo": 0.023212913143735588
+        },
+        "volatilidad": {
+          "baja": 0.09240467404674045,
+          "media": 0.4152829028290283,
+          "alta": 0.09240467404674045,
+          "extrema": 0.39990774907749077
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.038579772517675984,
+          "sobreventa": 0.3229326775284353,
+          "neutral_bajo": 0.39209960036889024,
+          "neutral_alto": 0.20765447279434368,
+          "sobrecompra": 0.038579772517675984,
+          "sobrecompra_extrema": 0.0001537042729787888
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4613374327440431,
+          "bajo_vwap": 0.16925441967717142,
+          "neutral_vwap": 0.20768639508070716,
+          "sobre_vwap": 0.13082244427363568,
+          "muy_sobre_vwap": 0.030899308224442736
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.2692189421894219,
+          "tendencia_debil": 0.2922816728167282,
+          "tendencia_media": 0.1769680196801968,
+          "tendencia_fuerte": 0.2615313653136531
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.09431592169998954,
+          "bajista": 0.43975714435255936,
+          "lateral": 0.46592693394745105
+        },
+        "volumen": {
+          "muy_bajo": 0.13092621664050236,
+          "bajo": 0.25128205128205133,
+          "normal": 0.3768707482993197,
+          "alto": 0.15709052851909994,
+          "extremo": 0.08383045525902669
+        },
+        "volatilidad": {
+          "baja": 0.11000628009210801,
+          "media": 0.40831065522294324,
+          "alta": 0.17280720117228388,
+          "extrema": 0.30887586351266483
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.04196316450397656,
+          "sobreventa": 0.2512557555462537,
+          "neutral_bajo": 0.3140435328589368,
+          "neutral_alto": 0.298346588530766,
+          "sobrecompra": 0.0890539974884889,
+          "sobrecompra_extrema": 0.005336961071578066
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4030350601779173,
+          "bajo_vwap": 0.13615907901622187,
+          "neutral_vwap": 0.15185766614338042,
+          "sobre_vwap": 0.16232339089481948,
+          "muy_sobre_vwap": 0.1466248037676609
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.2931756332426209,
+          "tendencia_debil": 0.246074942432489,
+          "tendencia_media": 0.18850743144232782,
+          "tendencia_fuerte": 0.2722419928825623
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.17805924840364284,
+          "bajista": 0.23039882759342617,
+          "lateral": 0.591541924002931
+        },
+        "volumen": {
+          "muy_bajo": 0.12046049188906333,
+          "bajo": 0.3454735740450026,
+          "normal": 0.3350078492935636,
+          "alto": 0.15185766614338042,
+          "extremo": 0.047200418628990055
+        },
+        "volatilidad": {
+          "baja": 0.14140674063219594,
+          "media": 0.68568138999372,
+          "alta": 0.08907263973204939,
+          "extrema": 0.08383922964203475
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.04719547928003348,
+          "sobreventa": 0.10998325659271661,
+          "neutral_bajo": 0.36636668061950606,
+          "neutral_alto": 0.36636668061950606,
+          "sobrecompra": 0.10998325659271661,
+          "sobrecompra_extrema": 0.00010464629552113855
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.16232339089481948,
+          "bajo_vwap": 0.28267922553636843,
+          "neutral_vwap": 0.21988487702773418,
+          "sobre_vwap": 0.2460491889063318,
+          "muy_sobre_vwap": 0.0890633176347462
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.4135440653129579,
+          "tendencia_debil": 0.2931756332426209,
+          "tendencia_media": 0.13093992045216662,
+          "tendencia_fuerte": 0.16234038099225453
+        }
+      }
+    },
+    "total_muestras": 512,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.238806,
+        "1": 0.296296,
+        "2": 0.357143,
+        "3": 0.266667,
+        "4": 0.181818,
+        "5": 0.5
+      },
+      "SELL": {
+        "0": 0.333333,
+        "1": 0.211538,
+        "2": 0.216216,
+        "3": 0.4,
+        "4": 0.3125,
+        "5": 0.5,
+        "6": 0.0,
+        "7": 0.0,
+        "9": 0.0
+      },
+      "HOLD": {
+        "0": 0.636364,
+        "1": 0.272727,
+        "2": 0.666667,
+        "3": 0.25,
+        "4": 0.4375,
+        "5": 0.636364,
+        "6": 0.529412,
+        "7": 0.428571,
+        "8": 0.444444
+      }
+    },
+    "accuracy": 0.4559,
+    "accuracy_pct": 45.59,
+    "accuracy_validacion": 0.4559,
+    "accuracy_validacion_pct": 45.59,
+    "balanced_accuracy": 0.3696,
+    "balanced_accuracy_pct": 36.96,
+    "f1_macro": 0.3493,
+    "f1_macro_pct": 34.93,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.3077,
+        "recall": 0.1111,
+        "f1": 0.1633
+      },
+      "SELL": {
+        "precision": 0.381,
+        "recall": 0.2286,
+        "f1": 0.2857
+      },
+      "HOLD": {
+        "precision": 0.4902,
+        "recall": 0.7692,
+        "f1": 0.5988
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 4,
+        "SELL": 3,
+        "HOLD": 29
+      },
+      "SELL": {
+        "BUY": 4,
+        "SELL": 8,
+        "HOLD": 23
+      },
+      "HOLD": {
+        "BUY": 5,
+        "SELL": 10,
+        "HOLD": 50
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 62,
+    "baseline_accuracy": 0.4779,
+    "baseline_accuracy_pct": 47.79,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "LTCUSDT"
+    ]
+  },
+  "DOTUSDT": {
+    "tipo": "Red Bayesiana discreta",
+    "version": "20260701123248",
+    "features": [
+      "tendencia",
+      "volumen",
+      "volatilidad",
+      "rsi_estado",
+      "precio_vs_vwap",
+      "adx_estado"
+    ],
+    "dominios": {
+      "tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "volumen": [
+        "muy_bajo",
+        "bajo",
+        "normal",
+        "alto",
+        "extremo"
+      ],
+      "volatilidad": [
+        "baja",
+        "media",
+        "alta",
+        "extrema"
+      ],
+      "rsi_estado": [
+        "sobreventa_extrema",
+        "sobreventa",
+        "neutral_bajo",
+        "neutral_alto",
+        "sobrecompra",
+        "sobrecompra_extrema"
+      ],
+      "macd_estado": [
+        "alcista",
+        "bajista",
+        "neutral"
+      ],
+      "precio_vs_vwap": [
+        "muy_bajo_vwap",
+        "bajo_vwap",
+        "neutral_vwap",
+        "sobre_vwap",
+        "muy_sobre_vwap"
+      ],
+      "bollinger_estado": [
+        "bajo_banda_inferior",
+        "canal_inferior",
+        "canal_superior",
+        "sobre_banda_superior"
+      ],
+      "adx_estado": [
+        "sin_tendencia",
+        "tendencia_debil",
+        "tendencia_media",
+        "tendencia_fuerte"
+      ],
+      "señal_tendencia": [
+        "alcista",
+        "bajista",
+        "lateral"
+      ],
+      "señal_momentum": [
+        "bajista_extremo",
+        "bajista",
+        "neutral",
+        "alcista",
+        "alcista_extremo"
+      ]
+    },
+    "clases": [
+      "BUY",
+      "SELL",
+      "HOLD"
+    ],
+    "priors": {
+      "BUY": 0.2799322358487092,
+      "SELL": 0.4364526939932973,
+      "HOLD": 0.28361507015799364
+    },
+    "likelihoods": {
+      "BUY": {
+        "tendencia": {
+          "alcista": 0.079047744311456,
+          "bajista": 0.32237274759963175,
+          "lateral": 0.5985795080889122
+        },
+        "volumen": {
+          "muy_bajo": 0.19079552925706772,
+          "bajo": 0.31571334648257726,
+          "normal": 0.3222879684418146,
+          "alto": 0.10532544378698225,
+          "extremo": 0.06587771203155819
+        },
+        "volatilidad": {
+          "baja": 0.0001315097317201473,
+          "media": 0.5853498158863755,
+          "alta": 0.05931088900578642,
+          "extrema": 0.3552077853761178
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.09873783854851433,
+          "sobreventa": 0.2367867473047594,
+          "neutral_bajo": 0.33539311070207734,
+          "neutral_alto": 0.2499342624244018,
+          "sobrecompra": 0.07901656586905074,
+          "sobrecompra_extrema": 0.00013147515119642388
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.5195266272189349,
+          "bajo_vwap": 0.14477317554240632,
+          "neutral_vwap": 0.11847468770545694,
+          "sobre_vwap": 0.10532544378698225,
+          "muy_sobre_vwap": 0.11190006574621959
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.2171225670699632,
+          "tendencia_debil": 0.2828774329300368,
+          "tendencia_media": 0.22369805365597054,
+          "tendencia_fuerte": 0.27630194634402944
+        }
+      },
+      "SELL": {
+        "tendencia": {
+          "alcista": 0.15616299670969375,
+          "bajista": 0.345988357377879,
+          "lateral": 0.4978486459124272
+        },
+        "volumen": {
+          "muy_bajo": 0.17722479966258964,
+          "bajo": 0.27423028258118937,
+          "normal": 0.33327709827077184,
+          "alto": 0.13926613243357236,
+          "extremo": 0.07600168705187685
+        },
+        "volatilidad": {
+          "baja": 8.435970980259827e-05,
+          "media": 0.4387548506833136,
+          "alta": 0.09709802598279062,
+          "extrema": 0.4640627636240931
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.029605263157894735,
+          "sobreventa": 0.17299257759784076,
+          "neutral_bajo": 0.4007253711201079,
+          "neutral_alto": 0.2784244264507422,
+          "sobrecompra": 0.10973346828609987,
+          "sobrecompra_extrema": 0.00851889338731444
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.4555883593420498,
+          "bajo_vwap": 0.13504850274145933,
+          "neutral_vwap": 0.09287220582032897,
+          "sobre_vwap": 0.09287220582032897,
+          "muy_sobre_vwap": 0.223618726275833
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.23629154715707779,
+          "tendencia_debil": 0.3164332714695461,
+          "tendencia_media": 0.27003543107811706,
+          "tendencia_fuerte": 0.17723975029525899
+        }
+      },
+      "HOLD": {
+        "tendencia": {
+          "alcista": 0.09100350512787225,
+          "bajista": 0.4220433597299753,
+          "lateral": 0.4869531351421524
+        },
+        "volumen": {
+          "muy_bajo": 0.20778715120051916,
+          "bajo": 0.2921479558728099,
+          "normal": 0.31810512654120704,
+          "alto": 0.14289422452952627,
+          "extremo": 0.039065541855937705
+        },
+        "volatilidad": {
+          "baja": 0.00012980269989615784,
+          "media": 0.7205347871235721,
+          "alta": 0.10397196261682241,
+          "extrema": 0.17536344755970923
+        },
+        "rsi_estado": {
+          "sobreventa_extrema": 0.0650142745912276,
+          "sobreventa": 0.20127173630936931,
+          "neutral_bajo": 0.4283675058396055,
+          "neutral_alto": 0.20127173630936931,
+          "sobrecompra": 0.0909680768232546,
+          "sobrecompra_extrema": 0.01310667012717363
+        },
+        "precio_vs_vwap": {
+          "muy_bajo_vwap": 0.37001946787800133,
+          "bajo_vwap": 0.2986372485399092,
+          "neutral_vwap": 0.11044776119402985,
+          "sobre_vwap": 0.11693705386112914,
+          "muy_sobre_vwap": 0.10395846852693057
+        },
+        "adx_estado": {
+          "sin_tendencia": 0.24026479750778817,
+          "tendencia_debil": 0.42847871235721696,
+          "tendencia_media": 0.2207943925233645,
+          "tendencia_fuerte": 0.11046209761163031
+        }
+      }
+    },
+    "total_muestras": 543,
+    "alpha": 0.02,
+    "fecha_entrenamiento": "2026-07-01 12:32:48",
+    "calibracion_isotonica": {
+      "BUY": {
+        "0": 0.125,
+        "1": 0.166667,
+        "2": 0.290323,
+        "3": 0.275,
+        "4": 0.230769,
+        "5": 0.25,
+        "6": 0.0,
+        "7": 1.0
+      },
+      "SELL": {
+        "1": 0.555556,
+        "2": 0.422222,
+        "3": 0.311111,
+        "4": 0.266667,
+        "5": 0.5,
+        "6": 0.545455,
+        "7": 0.714286
+      },
+      "HOLD": {
+        "0": 0.0,
+        "1": 0.3,
+        "2": 0.323529,
+        "3": 0.465116,
+        "4": 0.272727,
+        "5": 0.333333,
+        "6": 0.0,
+        "7": 0.4
+      }
+    },
+    "accuracy": 0.3235,
+    "accuracy_pct": 32.35,
+    "accuracy_validacion": 0.3235,
+    "accuracy_validacion_pct": 32.35,
+    "balanced_accuracy": 0.314,
+    "balanced_accuracy_pct": 31.4,
+    "f1_macro": 0.3139,
+    "f1_macro_pct": 31.39,
+    "precision_recall_f1": {
+      "BUY": {
+        "precision": 0.2105,
+        "recall": 0.2424,
+        "f1": 0.2254
+      },
+      "SELL": {
+        "precision": 0.413,
+        "recall": 0.3455,
+        "f1": 0.3762
+      },
+      "HOLD": {
+        "precision": 0.3269,
+        "recall": 0.3542,
+        "f1": 0.34
+      }
+    },
+    "matriz_confusion": {
+      "BUY": {
+        "BUY": 8,
+        "SELL": 12,
+        "HOLD": 13
+      },
+      "SELL": {
+        "BUY": 14,
+        "SELL": 19,
+        "HOLD": 22
+      },
+      "HOLD": {
+        "BUY": 16,
+        "SELL": 15,
+        "HOLD": 17
+      }
+    },
+    "total_validacion": 136,
+    "correctos_validacion": 44,
+    "baseline_accuracy": 0.4044,
+    "baseline_accuracy_pct": 40.44,
+    "best_N": 5,
+    "best_threshold": 0.012,
+    "best_ratio": 1.0,
+    "pares_usados": [
+      "DOTUSDT"
+    ]
+  },
+  "evaluacion_oos_real": {
+    "accuracy": 0.4008,
+    "accuracy_pct": 40.08,
+    "balanced_accuracy": 0.3801,
+    "balanced_accuracy_pct": 38.01,
+    "total_validacion": 1280,
+    "correctos": 513,
+    "f1_macro": 0.3325,
+    "metrics_per_class": {
+      "BUY": {
+        "precision": 0.5445,
+        "recall": 0.1781,
+        "f1": 0.2684
+      },
+      "SELL": {
+        "precision": 0.3918,
+        "recall": 0.7978,
+        "f1": 0.5255
+      },
+      "HOLD": {
+        "precision": 0.2676,
+        "recall": 0.1645,
+        "f1": 0.2038
+      }
+    },
+    "confusion_matrix": {
+      "BUY": {
+        "BUY": 104,
+        "SELL": 412,
+        "HOLD": 68
+      },
+      "SELL": {
+        "BUY": 58,
+        "SELL": 371,
+        "HOLD": 36
+      },
+      "HOLD": {
+        "BUY": 29,
+        "SELL": 164,
+        "HOLD": 38
+      }
+    }
+  },
+  "distribucion_predicciones": {
+    "SELL": 324,
+    "BUY": 207,
+    "HOLD": 827
+  },
+  "distribucion_regimenes": {
+    "alcista": 692,
+    "lateral": 4307,
+    "bajista": 1791
+  },
+  "distribucion_etiquetas": {
+    "entrenamiento": {
+      "SELL": 1998,
+      "HOLD": 2015,
+      "BUY": 1419
+    },
+    "validacion": {
+      "HOLD": 591,
+      "BUY": 324,
+      "SELL": 443
+    },
+    "oos_real": {
+      "BUY": 584,
+      "SELL": 465,
+      "HOLD": 231
+    }
+  }
+}

@@ -27,9 +27,5 @@
   "simulation": {
     "initial_balance": 10000.0,
     "currency": "USDT"
-<<<<<<< HEAD
   }  
-=======
-  }
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901
 }

@@ -15,6 +15,7 @@ from models import bayesian_model
 from services import market_service
 
 AVISO_LEGAL = "Este sistema no ofrece asesoramiento financiero. Invierta con responsabilidad."
+AVISO_RECALIBRACION = "modelo en recalibración"
 
 
 def generar_analisis(symbol: str, accion: str, usuario_id: int, perfil_riesgo: str | None = None) -> dict:
@@ -37,14 +38,34 @@ def generar_analisis(symbol: str, accion: str, usuario_id: int, perfil_riesgo: s
             "mensaje": mercado["mensaje_liquidez"],
         }
     else:
-        prediccion = bayesian_model.predecir(
-            mercado["tendencia"],
-            mercado["volumen"],
-            mercado["volatilidad"],
-            accion,
-            indicadores=mercado.get("indicadores", {}),
-            perfil_riesgo=perfil,
-        )
+        # ── GATE DE SEGURIDAD: bloquear BUY/SELL si el modelo no está listo ──
+        modelo_activo = bayesian_model.cargar_modelo()
+        submodelo, _ = bayesian_model.obtener_submodelo(modelo_activo, symbol)
+        if submodelo.get("desplegable") is False:
+            prediccion = {
+                "recomendacion": "HOLD",
+                "probabilidades": {"BUY": 0.0, "SELL": 0.0, "HOLD": 1.0},
+                "probabilidades_calibradas": {"BUY": 0.0, "SELL": 0.0, "HOLD": 1.0},
+                "probabilidad": 0.0,
+                "probabilidad_pct": 0.0,
+                "confianza": "No calculada",
+                "color": "secondary",
+                "umbral_perfil": bayesian_model.PERFILES.get(perfil, 0.70),
+                "perfil_riesgo": perfil,
+                "variables": {},
+                "mensaje": AVISO_RECALIBRACION,
+                "modelo_en_recalibracion": True,
+            }
+        else:
+            prediccion = bayesian_model.predecir(
+                mercado["tendencia"],
+                mercado["volumen"],
+                mercado["volatilidad"],
+                accion,
+                indicadores=mercado.get("indicadores", {}),
+                perfil_riesgo=perfil,
+                symbol=symbol,
+            )
 
     advertencia = mercado.get("aviso_volatilidad", "")
     parametros = {
@@ -55,7 +76,7 @@ def generar_analisis(symbol: str, accion: str, usuario_id: int, perfil_riesgo: s
         "liquidez_suficiente": mercado.get("liquidez_suficiente"),
     }
 
-    probs = prediccion.get("probabilidades", {})
+    probs = prediccion.get("probabilidades_calibradas", {}) or prediccion.get("probabilidades", {})
     operacion_id = db.insertar_operacion({
         "usuario_id": usuario_id,
         "cripto": symbol,

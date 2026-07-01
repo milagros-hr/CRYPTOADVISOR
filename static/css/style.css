@@ -437,6 +437,18 @@ a:hover { text-decoration: underline; }
   color: #fca5a5;
 }
 
+.alert-success {
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: #a7f3d0;
+}
+
+.alert-info {
+  background: rgba(59,130,246,0.12);
+  border: 1px solid rgba(59,130,246,0.3);
+  color: #bfdbfe;
+}
+
 /* ─── ANALYSIS PANEL ──────────────────────────────────────── */
 .analysis-panel {
   display: grid;
@@ -1214,7 +1226,6 @@ section h2 {
   color: var(--yellow);
   font-weight: 700;
 }
-<<<<<<< HEAD
 
 /* Selector de criptos agregado */
 .btn-cripto {
@@ -1272,5 +1283,3 @@ section h2 {
 .text-danger { color: var(--red) !important; }
 .portfolio-form .form-group { margin-bottom: 16px; }
 .table-wrapper { overflow-x: auto; }
-=======
->>>>>>> a3f45dd4a041dd5031a44a3731b083b9b7932901

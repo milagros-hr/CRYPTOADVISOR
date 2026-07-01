@@ -59,12 +59,11 @@
         <select id="filtro-estado" onchange="filtrarTabla()">
           <option value="">Todos los estados</option>
           <option value="pendiente">⏳ Pendiente</option>
-          <option value="aprobada">✅ Aprobada</option>
-          <option value="rechazada">❌ Rechazada</option>
+          <option value="completada">✔️ Completada</option>
         </select>
       </div>
     </header>
-
+ 
     <section class="table-section">
       {% if operaciones %}
       <div class="table-wrapper">
@@ -78,8 +77,8 @@
               <th>Precio</th>
               <th>Probabilidad</th>
               <th>Tendencia</th>
-              <th>Estado</th>
-              <th>Nota Admin</th>
+              <th>Resultado</th>
+              <th>Detalles</th>
               <th>Fecha</th>
             </tr>
           </thead>
@@ -91,7 +90,7 @@
               <td><span class="cripto-tag">{{ op.cripto | replace('USDT','') }}</span></td>
               <td>
                 <span class="accion-badge accion-{{ op.accion }}">
-                  {{ {'comprar':'📈 Comprar','vender':'📉 Vender','esperar':'⏳ Esperar'}.get(op.accion, op.accion) }}
+                   {{ {'comprar':'📈 Comprar','vender':'📉 Vender','esperar':'⏳ Esperar'}.get(op.accion, op.accion) }}
                 </span>
               </td>
               <td>${{ "%.4f"|format(op.precio_actual|float) }}</td>
@@ -107,9 +106,13 @@
                 </span>
               </td>
               <td>
-                <span class="estado-badge estado-{{ op.estado }}">
-                  {{ {'pendiente':'⏳ Pendiente','aprobada':'✅ Aprobada','rechazada':'❌ Rechazada'}.get(op.estado, op.estado) }}
-                </span>
+                {% if op.estado == 'pendiente' %}
+                <span class="estado-badge estado-pendiente">⏳ Pendiente</span>
+                {% elif op.resultado == 'exitoso' %}
+                <span class="estado-badge estado-aprobada">✅ Exitoso</span>
+                {% else %}
+                <span class="estado-badge estado-rechazada">❌ Fallido</span>
+                {% endif %}
               </td>
               <td class="nota-col">{{ op.admin_nota or '—' }}</td>
               <td class="date-col">{{ op.created_at[:16] }}</td>
