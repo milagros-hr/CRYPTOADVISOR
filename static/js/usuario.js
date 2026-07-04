@@ -110,7 +110,6 @@ async function ejecutarAnalisis() {
     const perfilEl = document.getElementById('perfil-riesgo');
     const data = await apiPost('/api/analizar', {
       symbol: simboloSeleccionado,
-      accion: accionSeleccionada,
       perfil_riesgo: perfilEl ? perfilEl.value : 'moderado'
     });
 

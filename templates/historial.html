@@ -20,9 +20,13 @@
       <li><a href="/admin">🛡️ Panel Admin</a></li>
       {% else %}
       <li><a href="/dashboard">📊 Dashboard</a></li>
+      <li><a href="/portafolio">💼 Portafolio</a></li>
       {% endif %}
       <li class="active"><a href="/historial">📋 Historial</a></li>
       <li><a href="/estadisticas">📈 Estadísticas</a></li>
+      {% if rol != 'admin' %}
+      <li><a href="/aprende">🧠 Aprende</a></li>
+      {% endif %}
     </ul>
     <div class="sidebar-footer">
       <div class="sidebar-user">
@@ -40,12 +44,12 @@
 
     <header class="page-header">
       <div>
-        <h1>📋 Historial de Operaciones</h1>
+        <h1>📋 Historial de Consultas Realizadas</h1>
         <p class="subtitle">
           {% if rol == 'admin' %}
-          Todas las operaciones registradas en el sistema
+          Registro histórico de todos los análisis del sistema
           {% else %}
-          Tus operaciones de análisis
+          Tus consultas y análisis de mercado anteriores
           {% endif %}
         </p>
       </div>
@@ -53,14 +57,9 @@
         <input
           type="text"
           id="filtro-busqueda"
-          placeholder="🔍 Buscar por cripto, acción..."
+          placeholder="🔍 Buscar por cripto, recomendación..."
           oninput="filtrarTabla()"
         >
-        <select id="filtro-estado" onchange="filtrarTabla()">
-          <option value="">Todos los estados</option>
-          <option value="pendiente">⏳ Pendiente</option>
-          <option value="completada">✔️ Completada</option>
-        </select>
       </div>
     </header>
  
@@ -73,49 +72,55 @@
               <th>#</th>
               {% if rol == 'admin' %}<th>Usuario</th>{% endif %}
               <th>Cripto</th>
-              <th>Acción</th>
-              <th>Precio</th>
-              <th>Probabilidad</th>
-              <th>Tendencia</th>
-              <th>Resultado</th>
-              <th>Detalles</th>
+              <th>Precio en Análisis</th>
+              <th>Recomendación</th>
+              <th>Confianza</th>
+              <th>Indicadores Usados</th>
+              <th>Explicación</th>
               <th>Fecha</th>
+              {% if rol != 'admin' %}<th>Acciones</th>{% endif %}
             </tr>
           </thead>
           <tbody>
             {% for op in operaciones %}
-            <tr class="hist-row" data-estado="{{ op.estado }}" data-cripto="{{ op.cripto }}" data-accion="{{ op.accion }}">
+            <tr class="hist-row" data-cripto="{{ op.cripto }}" data-recomendacion="{{ op.recomendacion }}">
               <td><span class="op-id">#{{ op.id }}</span></td>
               {% if rol == 'admin' %}<td>{{ op.username }}</td>{% endif %}
               <td><span class="cripto-tag">{{ op.cripto | replace('USDT','') }}</span></td>
+              <td>${{ "%.4f"|format(op.precio_actual|float) }}</td>
               <td>
-                <span class="accion-badge accion-{{ op.accion }}">
-                   {{ {'comprar':'📈 Comprar','vender':'📉 Vender','esperar':'⏳ Esperar'}.get(op.accion, op.accion) }}
+                <span class="accion-badge {% if op.recomendacion == 'BUY' %}accion-comprar{% elif op.recomendacion == 'SELL' %}accion-vender{% else %}accion-esperar{% endif %}">
+                  {{ op.recomendacion }}
                 </span>
               </td>
-              <td>${{ "%.4f"|format(op.precio_actual|float) }}</td>
               <td>
                 <div class="prob-bar-container">
                   <div class="prob-bar" style="width: {{ (op.probabilidad * 100)|round|int }}%"></div>
                   <span>{{ (op.probabilidad * 100)|round(1) }}%</span>
                 </div>
               </td>
-              <td>
-                <span class="tendencia-{{ op.tendencia }}">
-                  {{ {'alcista':'🟢 Alcista','bajista':'🔴 Bajista','lateral':'🟡 Lateral'}.get(op.tendencia, op.tendencia) }}
-                </span>
+              <td style="font-size: 0.8rem; line-height: 1.3; color: var(--text-muted);">
+                <b>Tendencia:</b> {{ op.tendencia | capitalize }}<br>
+                <b>Volumen:</b> {{ op.volumen | capitalize }}<br>
+                <b>Volatilidad:</b> {{ op.volatilidad | capitalize }}
               </td>
-              <td>
-                {% if op.estado == 'pendiente' %}
-                <span class="estado-badge estado-pendiente">⏳ Pendiente</span>
-                {% elif op.resultado == 'exitoso' %}
-                <span class="estado-badge estado-aprobada">✅ Exitoso</span>
+              <td style="font-size: 0.8rem; max-width: 250px; line-height: 1.3; color: var(--text-muted); text-align: justify; white-space: normal;">
+                {% if op.recomendacion == 'BUY' %}
+                Mercado alcista o sobreventa extrema. Sugiere entrada o acumulación.
+                {% elif op.recomendacion == 'SELL' %}
+                Presión bajista o sobrecompra extrema. Sugiere salida o toma de ganancias.
                 {% else %}
-                <span class="estado-badge estado-rechazada">❌ Fallido</span>
+                Señales mixtas o volatilidad riesgosa. Sugiere esperar y mantener cautela.
                 {% endif %}
               </td>
-              <td class="nota-col">{{ op.admin_nota or '—' }}</td>
               <td class="date-col">{{ op.created_at[:16] }}</td>
+              {% if rol != 'admin' %}
+              <td>
+                <a href="/dashboard?symbol={{ op.cripto }}" class="btn btn-sm" style="background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); color: var(--accent); white-space: nowrap; font-weight: bold; border-radius: 4px; padding: 4px 8px; text-decoration: none;">
+                  🔍 Reanalizar
+                </a>
+              </td>
+              {% endif %}
             </tr>
             {% endfor %}
           </tbody>
@@ -123,13 +128,13 @@
       </div>
 
       <div class="table-footer">
-        Total: <strong>{{ operaciones|length }}</strong> operación(es)
+        Total: <strong>{{ operaciones|length }}</strong> consulta(s)
       </div>
 
       {% else %}
       <div class="empty-state">
         <div class="empty-icon">📭</div>
-        <h3>No hay operaciones registradas</h3>
+        <h3>No hay consultas registradas</h3>
         <p>Aún no se han realizado análisis en el sistema</p>
         {% if rol != 'admin' %}
         <a href="/dashboard" class="btn btn-primary">Realizar primer análisis</a>
@@ -144,13 +149,11 @@
   <script>
     function filtrarTabla() {
       const busqueda = document.getElementById('filtro-busqueda').value.toLowerCase();
-      const estado   = document.getElementById('filtro-estado').value;
       const filas    = document.querySelectorAll('.hist-row');
 
       filas.forEach(fila => {
-        const text       = fila.textContent.toLowerCase();
-        const estadoFila = fila.dataset.estado;
-        const mostrar    = text.includes(busqueda) && (estado === '' || estadoFila === estado);
+        const text = fila.textContent.toLowerCase();
+        const mostrar = text.includes(busqueda);
         fila.style.display = mostrar ? '' : 'none';
       });
     }

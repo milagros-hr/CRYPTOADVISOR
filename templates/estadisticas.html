@@ -20,9 +20,13 @@
       <li><a href="/admin">🛡️ Panel Admin</a></li>
       {% else %}
       <li><a href="/dashboard">📊 Dashboard</a></li>
+      <li><a href="/portafolio">💼 Portafolio</a></li>
       {% endif %}
       <li><a href="/historial">📋 Historial</a></li>
       <li class="active"><a href="/estadisticas">📈 Estadísticas</a></li>
+      {% if rol != 'admin' %}
+      <li><a href="/aprende">🧠 Aprende</a></li>
+      {% endif %}
     </ul>
     <div class="sidebar-footer">
       <div class="sidebar-user">
@@ -41,85 +45,53 @@
     <header class="page-header">
       <div>
         <h1>📈 Estadísticas del Sistema</h1>
-        <p class="subtitle">Resumen global de las operaciones registradas</p>
+        <p class="subtitle">Resumen global de las consultas y análisis registrados</p>
       </div>
     </header>
 
     <!-- KPI CARDS -->
-    <section class="stats-row">
-      <div class="stat-card">
+    <section class="stats-row" style="display: flex; gap: 20px;">
+      <div class="stat-card" style="flex: 1;">
         <div class="stat-icon">📋</div>
         <div class="stat-value">{{ stats.total }}</div>
-        <div class="stat-label">Total Operaciones</div>
+        <div class="stat-label">Total Consultas Realizadas</div>
       </div>
-      <div class="stat-card pending">
-        <div class="stat-icon">⏳</div>
-        <div class="stat-value">{{ stats.pendientes }}</div>
-        <div class="stat-label">Pendientes</div>
-      </div>
-      <div class="stat-card approved">
-        <div class="stat-icon">✅</div>
-        <div class="stat-value">{{ stats.aprobadas }}</div>
-        <div class="stat-label">Aprobadas</div>
-      </div>
-      <div class="stat-card rejected">
-        <div class="stat-icon">❌</div>
-        <div class="stat-value">{{ stats.rechazadas }}</div>
-        <div class="stat-label">Rechazadas</div>
-      </div>
-      <div class="stat-card prob">
+      <div class="stat-card prob" style="flex: 1;">
         <div class="stat-icon">🧠</div>
         <div class="stat-value">{{ stats.prob_promedio }}%</div>
-        <div class="stat-label">Prob. Promedio IA</div>
+        <div class="stat-label">Probabilidad Promedio de Éxito (IA)</div>
       </div>
     </section>
 
     <!-- GRÁFICOS -->
-    <section class="charts-grid">
+    <section class="charts-grid" style="margin-top: 20px;">
 
       <!-- Distribución de acciones -->
       <div class="chart-card">
-        <h3>Distribución de Acciones</h3>
+        <h3>Distribución de Acciones Evaluadas</h3>
         <div class="bar-chart">
           {% set total_acciones = stats.get("compras", 0) + stats.get("ventas", 0) + stats.get("esperas", 0) %}
           {% if total_acciones > 0 %}
           <div class="bar-item">
-            <span class="bar-label">📈 Compras</span>
+            <span class="bar-label">📈 Compras (BUY)</span>
             <div class="bar-track">
               <div class="bar-fill buy-fill" style="width: {{ (stats.compras / total_acciones * 100)|round|int }}%"></div>
             </div>
             <span class="bar-value">{{ stats.compras }}</span>
           </div>
           <div class="bar-item">
-            <span class="bar-label">📉 Ventas</span>
+            <span class="bar-label">📉 Ventas (SELL)</span>
             <div class="bar-track">
               <div class="bar-fill sell-fill" style="width: {{ (stats.ventas / total_acciones * 100)|round|int }}%"></div>
             </div>
             <span class="bar-value">{{ stats.ventas }}</span>
           </div>
           <div class="bar-item">
-            <span class="bar-label">⏳ Esperas</span>
+            <span class="bar-label">⏳ Esperas (HOLD)</span>
             <div class="bar-track">
               <div class="bar-fill wait-fill" style="width: {{ (stats.esperas / total_acciones * 100)|round|int }}%"></div>
             </div>
             <span class="bar-value">{{ stats.esperas }}</span>
-          </div>
-          {% else %}
-          <p class="no-data">Sin datos aún</p>
-          {% endif %}
-        </div>
-      </div>
-
-      <!-- Estados -->
-      <div class="chart-card">
-        <h3>Estado de Operaciones</h3>
-        <div class="donut-container">
-          {% if stats.total > 0 %}
-          <canvas id="donut-chart" width="180" height="180"></canvas>
-          <div class="donut-legend">
-            <div class="legend-item"><span class="dot dot-pending"></span> Pendientes: {{ stats.pendientes }}</div>
-            <div class="legend-item"><span class="dot dot-approved"></span> Aprobadas: {{ stats.aprobadas }}</div>
-            <div class="legend-item"><span class="dot dot-rejected"></span> Rechazadas: {{ stats.rechazadas }}</div>
           </div>
           {% else %}
           <p class="no-data">Sin datos aún</p>
@@ -148,8 +120,8 @@
       </div>
 
       <!-- Probabilidades por operación (últimas 10) -->
-      <div class="chart-card chart-full">
-        <h3>Probabilidades de las Últimas Operaciones</h3>
+      <div class="chart-card chart-full" style="grid-column: span 2;">
+        <h3>Probabilidades de las Últimas Consultas</h3>
         {% if operaciones %}
         <div class="prob-timeline">
           {% for op in operaciones[:10] %}
@@ -157,6 +129,7 @@
             <div class="pt-header">
               <span class="cripto-tag">{{ op.cripto | replace('USDT','') }}</span>
               <span class="accion-badge accion-{{ op.accion }}">{{ op.accion }}</span>
+              <span class="accion-badge {% if op.recomendacion == 'BUY' %}accion-comprar{% elif op.recomendacion == 'SELL' %}accion-vender{% else %}accion-esperar{% endif %}" style="margin-left: auto;">Rec: {{ op.recomendacion }}</span>
             </div>
             <div class="pt-bar-track">
               <div class="pt-bar-fill {% if op.probabilidad >= 0.65 %}high{% elif op.probabilidad >= 0.45 %}mid{% else %}low{% endif %}"
@@ -168,7 +141,7 @@
           {% endfor %}
         </div>
         {% else %}
-        <p class="no-data">Sin operaciones registradas</p>
+        <p class="no-data">Sin consultas registradas</p>
         {% endif %}
       </div>
 
@@ -177,51 +150,5 @@
   </main>
 
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-  <script>
-    // Dibujar donut chart con canvas nativo
-    document.addEventListener('DOMContentLoaded', function() {
-      const canvas = document.getElementById('donut-chart');
-      if (!canvas) return;
-
-      const pendientes = {{ stats.pendientes }};
-      const aprobadas  = {{ stats.aprobadas }};
-      const rechazadas = {{ stats.rechazadas }};
-      const total      = pendientes + aprobadas + rechazadas;
-
-      if (total === 0) return;
-
-      const ctx  = canvas.getContext('2d');
-      const cx   = 90, cy = 90, r = 70, lineW = 22;
-      const datos = [
-        { valor: pendientes,  color: '#f59e0b' },
-        { valor: aprobadas,   color: '#10b981' },
-        { valor: rechazadas,  color: '#ef4444' }
-      ];
-
-      let angulo = -Math.PI / 2;
-      datos.forEach(d => {
-        if (d.valor === 0) return;
-        const slice = (d.valor / total) * 2 * Math.PI;
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, angulo, angulo + slice);
-        ctx.strokeStyle = d.color;
-        ctx.lineWidth   = lineW;
-        ctx.stroke();
-        angulo += slice;
-      });
-
-      // Centro vacío
-      ctx.beginPath();
-      ctx.arc(cx, cy, r - lineW / 2, 0, 2 * Math.PI);
-      ctx.fillStyle = 'var(--bg-card, #1a1a2e)';
-      ctx.fill();
-
-      // Texto central
-      ctx.fillStyle = '#e2e8f0';
-      ctx.font = 'bold 20px Syne, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(total, cx, cy + 6);
-    });
-  </script>
 </body>
 </html>

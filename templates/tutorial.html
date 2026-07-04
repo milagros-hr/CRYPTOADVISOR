@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoAdvisor — Bienvenido</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    html, body {
+      overflow-y: auto !important;
+      height: auto !important;
+      min-height: 100% !important;
+    }
+    .login-page {
+      overflow-y: auto !important;
+      align-items: flex-start !important;
+      padding: 40px 16px !important;
+    }
+    @media (max-width: 650px) {
+      .login-container {
+        padding: 0 !important;
+      }
+      .login-card {
+        padding: 24px 16px !important;
+      }
+      .login-page {
+        padding: 20px 12px !important;
+      }
+    }
+  </style>
+</head>
+<body class="login-page">
+  <div class="login-bg"><div class="grid-overlay"></div></div>
+  <div class="login-container" style="max-width: 650px;">
+    <div class="login-card" style="padding: 40px; text-align: left;">
+      
+      <div class="login-logo" style="text-align: center; margin-bottom: 30px;">
+        <div class="logo-mark">⬡</div>
+        <h1>¡Bienvenido a <span>CryptoAdvisor</span>, {{ username }}!</h1>
+        <p class="logo-sub">Tutorial de inicio rápido</p>
+      </div>
+
+      <div style="color: var(--text-color); line-height: 1.6; font-size: 0.95rem;">
+        
+        <!-- Sección 1 -->
+        <div style="margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+          <h3 style="color: var(--accent); margin-bottom: 8px; font-family: 'Syne', sans-serif;">1. ¿Qué es CryptoAdvisor?</h3>
+          <p style="color: var(--text-muted); text-align: justify;">
+            CryptoAdvisor es una plataforma inteligente de análisis y recomendación financiera basada en una **Red Bayesiana universitaria**. Nuestro modelo analiza indicadores técnicos de mercado en tiempo real desde Binance para calcular la probabilidad de éxito de tus decisiones comerciales.
+          </p>
+        </div>
+
+        <!-- Sección 2 -->
+        <div style="margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+          <h3 style="color: var(--accent); margin-bottom: 8px; font-family: 'Syne', sans-serif;">2. Recomendaciones: BUY, SELL y HOLD</h3>
+          <p style="color: var(--text-muted); text-align: justify; margin-bottom: 10px;">
+            El sistema evalúa tres posibles acciones según el estado del mercado:
+          </p>
+          <ul style="padding-left: 20px; color: var(--text-muted); list-style-type: square;">
+            <li style="margin-bottom: 5px;"><strong style="color: var(--green);">📈 BUY (Compra):</strong> El mercado muestra condiciones propicias para adquirir el activo (ej. sobreventa o tendencia alcista).</li>
+            <li style="margin-bottom: 5px;"><strong style="color: var(--red);">📉 SELL (Venta):</strong> Los indicadores sugieren condiciones de sobrecompra o tendencia bajista que justifican la venta o toma de ganancias.</li>
+            <li style="margin-bottom: 5px;"><strong style="color: var(--yellow);">⏳ HOLD (Espera):</strong> El mercado está indeciso, lateral o presenta volatilidad peligrosa. Es recomendable no operar en este momento.</li>
+          </ul>
+        </div>
+
+        <!-- Sección 3 -->
+        <div style="margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+          <h3 style="color: var(--accent); margin-bottom: 8px; font-family: 'Syne', sans-serif;">3. Nivel de Confianza</h3>
+          <p style="color: var(--text-muted); text-align: justify;">
+            Cada recomendación va acompañada de un **nivel de confianza** (Alta, Media o Baja) que representa la probabilidad condicional calculada por la Red Bayesiana. A mayor confianza, más sólido es el alineamiento de los indicadores analizados.
+          </p>
+        </div>
+
+        <!-- Sección 4 -->
+        <div style="margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+          <h3 style="color: var(--accent); margin-bottom: 8px; font-family: 'Syne', sans-serif;">4. ¿Cómo interpretar la recomendación?</h3>
+          <p style="color: var(--text-muted); text-align: justify;">
+            Utiliza la recomendación para contrastar tus propias hipótesis. Si tu perfil es agresivo, el umbral de aceptación es menor; si eres conservador, el sistema priorizará la seguridad sugiriendo **HOLD** ante la menor incertidumbre.
+          </p>
+        </div>
+
+        <!-- Sección 5 -->
+        <div style="margin-bottom: 30px; background: rgba(239, 68, 68, 0.08); border-left: 4px solid var(--red); padding: 15px; border-radius: 4px;">
+          <h4 style="color: var(--red); margin-bottom: 5px; font-family: 'Syne', sans-serif;">⚠️ ADVERTENCIA DE RIESGO</h4>
+          <p style="color: var(--text-muted); font-size: 0.85rem; text-align: justify; margin: 0;">
+            CryptoAdvisor es un **sistema de apoyo para la toma de decisiones**. No garantiza ganancias, no realiza trading automatizado ni ejecuta operaciones en tu cuenta de intercambio. Toda inversión conlleva riesgos.
+          </p>
+        </div>
+
+      </div>
+
+      <form method="POST" action="/tutorial">
+        <button type="submit" class="btn btn-primary btn-block" style="padding: 15px; font-size: 1rem; font-weight: bold;">
+          Entendido, ir al Dashboard
+        </button>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

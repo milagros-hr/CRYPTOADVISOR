@@ -6,6 +6,7 @@ Base de datos SQLite de CryptoAdvisor.
 import json
 import os
 import sqlite3
+from werkzeug.security import generate_password_hash
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "trading.db")
 
@@ -35,6 +36,8 @@ def init_db():
             password TEXT NOT NULL,
             rol TEXT NOT NULL DEFAULT 'usuario',
             perfil_riesgo TEXT DEFAULT 'moderado',
+            conoce_cripto TEXT DEFAULT 'si',
+            tutorial_completado INTEGER DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -85,6 +88,8 @@ def init_db():
     for col, definition in {
         "email": "TEXT",
         "perfil_riesgo": "TEXT DEFAULT 'moderado'",
+        "conoce_cripto": "TEXT DEFAULT 'si'",
+        "tutorial_completado": "INTEGER DEFAULT 0",
     }.items():
         _ensure_column(cursor, "usuarios", col, definition)
 
@@ -101,18 +106,23 @@ def init_db():
     }.items():
         _ensure_column(cursor, "operaciones", col, definition)
 
+    # Almacenar contraseñas como hashes criptográficos seguros en lugar de texto plano.
+    # El almacenamiento de contraseñas en texto plano es una grave vulnerabilidad de seguridad, ya que
+    # si la base de datos es comprometida (por ejemplo, a través de una inyección SQL o acceso físico),
+    # un atacante obtendría acceso inmediato a las cuentas de los usuarios. Además, muchos usuarios reutilizan sus
+    # contraseñas en múltiples servicios, lo que expone sus datos en plataformas externas.
     cursor.execute("SELECT COUNT(*) FROM usuarios WHERE username = 'admin'")
     if cursor.fetchone()[0] == 0:
         cursor.execute(
             "INSERT INTO usuarios (username, email, password, rol, perfil_riesgo) VALUES (?, ?, ?, ?, ?)",
-            ("admin", "admin@cryptoadvisor.local", "admin123", "admin", "moderado")
+            ("admin", "admin@cryptoadvisor.local", generate_password_hash("admin123"), "admin", "moderado")
         )
 
     cursor.execute("SELECT COUNT(*) FROM usuarios WHERE username = 'usuario'")
     if cursor.fetchone()[0] == 0:
         cursor.execute(
             "INSERT INTO usuarios (username, email, password, rol, perfil_riesgo) VALUES (?, ?, ?, ?, ?)",
-            ("usuario", "usuario@cryptoadvisor.local", "user123", "usuario", "moderado")
+            ("usuario", "usuario@cryptoadvisor.local", generate_password_hash("user123"), "usuario", "moderado")
         )
 
     conn.commit()
@@ -120,16 +130,28 @@ def init_db():
     print("[DB] CryptoAdvisor inicializado correctamente.")
 
 
-def crear_usuario(username, email, password, perfil_riesgo="moderado"):
+def crear_usuario(username, email, password, conoce_cripto="si", perfil_riesgo="moderado"):
     conn = get_connection()
     cursor = conn.cursor()
     try:
+        # Generar hash seguro para nunca guardar la contraseña en texto plano en la base de datos.
+        password_hash = generate_password_hash(password)
         cursor.execute(
-            "INSERT INTO usuarios (username, email, password, rol, perfil_riesgo) VALUES (?, ?, ?, 'usuario', ?)",
-            (username, email, password, perfil_riesgo)
+            "INSERT INTO usuarios (username, email, password, rol, perfil_riesgo, conoce_cripto, tutorial_completado) VALUES (?, ?, ?, 'usuario', ?, ?, 0)",
+            (username, email, password_hash, perfil_riesgo, conoce_cripto)
         )
         conn.commit()
         return cursor.lastrowid
+    finally:
+        conn.close()
+
+
+def completar_tutorial(usuario_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("UPDATE usuarios SET tutorial_completado = 1 WHERE id = ?", (usuario_id,))
+        conn.commit()
     finally:
         conn.close()
 
@@ -149,7 +171,7 @@ def existe_usuario(username, email=None):
 def get_usuario(usuario_id):
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, username, email, rol, perfil_riesgo FROM usuarios WHERE id = ?", (usuario_id,))
+    cursor.execute("SELECT id, username, email, rol, perfil_riesgo, conoce_cripto, tutorial_completado FROM usuarios WHERE id = ?", (usuario_id,))
     row = cursor.fetchone()
     conn.close()
     return dict(row) if row else None
@@ -263,14 +285,9 @@ def get_estadisticas():
     cursor.execute("SELECT COUNT(*) FROM operaciones")
     stats["total"] = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM operaciones WHERE estado = 'pendiente'")
-    stats["pendientes"] = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM operaciones WHERE estado = 'aprobada'")
-    stats["aprobadas"] = cursor.fetchone()[0]
-
-    cursor.execute("SELECT COUNT(*) FROM operaciones WHERE estado = 'rechazada'")
-    stats["rechazadas"] = cursor.fetchone()[0]
+    stats["pendientes"] = 0
+    stats["aprobadas"] = 0
+    stats["rechazadas"] = 0
 
     cursor.execute("SELECT COUNT(*) FROM operaciones WHERE recomendacion = 'BUY'")
     stats["buy"] = stats["compras"] = cursor.fetchone()[0]

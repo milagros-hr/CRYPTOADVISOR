@@ -30,6 +30,16 @@ def login_requerido(f):
     def wrapper(*args, **kwargs):
         if not auth_service.esta_autenticado(session):
             return redirect(url_for("login"))
+
+        usuario_id = session.get("usuario_id")
+        datos_usr = db.get_usuario(usuario_id)
+        if datos_usr:
+            conoce = datos_usr.get("conoce_cripto", "si")
+            completado = datos_usr.get("tutorial_completado", 0)
+            if conoce == "no" and not completado:
+                if request.endpoint not in ("tutorial", "logout"):
+                    return redirect(url_for("tutorial"))
+
         return f(*args, **kwargs)
     return wrapper
 
@@ -71,6 +81,14 @@ def login():
             session["username"] = usuario["username"]
             session["rol"] = usuario["rol"]
 
+            # Redireccionar al tutorial si responde 'no' y no ha completado el tutorial
+            datos_usr = db.get_usuario(usuario["id"])
+            if datos_usr:
+                conoce = datos_usr.get("conoce_cripto", "si")
+                completado = datos_usr.get("tutorial_completado", 0)
+                if conoce == "no" and not completado:
+                    return redirect(url_for("tutorial"))
+
             if usuario["rol"] == "admin":
                 return redirect(url_for("admin_dashboard"))
             return redirect(url_for("usuario_dashboard"))
@@ -89,14 +107,31 @@ def registro():
         username = request.form.get("username", "").strip()
         email = request.form.get("email", "").strip()
         password = request.form.get("password", "").strip()
+        conoce_cripto = request.form.get("conoce_cripto", "si").strip().lower()
         perfil = request.form.get("perfil_riesgo", "moderado").strip().lower()
 
-        ok, msg = auth_service.registrar_usuario(username, email, password, perfil)
+        ok, msg = auth_service.registrar_usuario(username, email, password, conoce_cripto, perfil)
         if ok:
             return redirect(url_for("login"))
         error = msg
 
     return render_template("registro.html", error=error)
+
+
+@app.route("/tutorial", methods=["GET", "POST"])
+@login_requerido
+def tutorial():
+    if request.method == "POST":
+        db.completar_tutorial(session["usuario_id"])
+        return redirect(url_for("usuario_dashboard"))
+    return render_template("tutorial.html", username=session.get("username"))
+
+
+@app.route("/aprende")
+@login_requerido
+def aprende():
+    rol = session.get("rol")
+    return render_template("aprende.html", username=session.get("username"), rol=rol)
 
 
 @app.route("/logout")
@@ -210,7 +245,7 @@ def api_analizar():
         return jsonify(respuesta_json(False, "Datos JSON requeridos.")), 400
 
     symbol = data.get("symbol", "").strip().upper()
-    accion = data.get("accion", "").strip().lower()
+    accion = data.get("accion", "").strip().lower() or "esperar"
     perfil_riesgo = data.get("perfil_riesgo", "").strip().lower() or None
 
     ok, msg = validar_cripto(symbol)

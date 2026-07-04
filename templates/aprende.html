@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoAdvisor — Aprende</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="app-page {% if rol == 'admin' %}admin-theme{% endif %}">
+
+  <nav class="sidebar {% if rol == 'admin' %}admin-sidebar{% endif %}">
+    <div class="sidebar-logo">
+      <span class="logo-mark">⬡</span>
+      <span>Crypto<b>Advisor</b></span>
+    </div>
+    <ul class="sidebar-nav">
+      {% if rol == 'admin' %}
+      <li><a href="/admin">🛡️ Panel Admin</a></li>
+      {% else %}
+      <li><a href="/dashboard">📊 Dashboard</a></li>
+      <li><a href="/portafolio">💼 Portafolio</a></li>
+      {% endif %}
+      <li><a href="/historial">📋 Historial</a></li>
+      <li><a href="/estadisticas">📈 Estadísticas</a></li>
+      {% if rol != 'admin' %}
+      <li class="active"><a href="/aprende">🧠 Aprende</a></li>
+      {% endif %}
+    </ul>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <span class="user-avatar {% if rol == 'admin' %}admin-avatar{% endif %}">{{ username[0]|upper }}</span>
+        <div>
+          <strong>{{ username }}</strong>
+          <span class="role-badge {% if rol == 'admin' %}admin-badge{% endif %}">{{ rol|capitalize }}</span>
+        </div>
+      </div>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <header class="page-header">
+      <div>
+        <h1>🧠 Aprende: Centro Educativo</h1>
+        <p class="subtitle">Guías interactivas y conceptos clave sobre el trading y el sistema</p>
+      </div>
+    </header>
+
+    <section class="analysis-panel" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;">
+      
+      <!-- Fila 1 Izquierda: Introducción -->
+      <div class="resultado-card">
+        <h3>🪙 ¿Qué es una criptomoneda?</h3>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify;">
+          Una criptomoneda es un activo digital que utiliza cifrado criptográfico para garantizar su titularidad, asegurar la integridad de las transacciones y controlar la creación de unidades adicionales. No tienen existencia física y no están respaldadas por ningún banco central.
+        </p>
+        <h4 style="margin-top: 15px; color: var(--accent);">📊 ¿Qué significa BTC/USDT?</h4>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify;">
+          Representa un par de trading. La primera criptomoneda (**BTC** o Bitcoin) es el activo base que deseas comprar o vender, y la segunda (**USDT** o Tether) es la divisa de cotización. USDT es una moneda estable ("stablecoin") cuyo valor está ligado 1:1 al dólar estadounidense, facilitando la medición de precios de forma estable.
+        </p>
+      </div>
+
+      <!-- Fila 1 Derecha: Señales -->
+      <div class="resultado-card">
+        <h3>🚦 Señales de Recomendación</h3>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify; margin-bottom: 10px;">
+          CryptoAdvisor emite tres recomendaciones distintas tras analizar el mercado:
+        </p>
+        <ul style="padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+          <li><strong style="color: var(--green);">BUY (Compra):</strong> El modelo identifica una alta probabilidad de que el precio suba debido a sobreventa o tendencia favorable.</li>
+          <li><strong style="color: var(--red);">SELL (Venta):</strong> Se detecta una alta probabilidad de caída o retroceso, sugiriendo tomar ganancias o liquidar posiciones.</li>
+          <li><strong style="color: var(--yellow);">HOLD (Espera):</strong> Ausencia de tendencia clara o mercado sobre-volátil. La mejor acción es conservar el capital y esperar estabilidad.</li>
+        </ul>
+      </div>
+
+      <!-- Fila 2 Izquierda: Indicadores -->
+      <div class="resultado-card">
+        <h3>📈 Indicadores Técnicos Analizados</h3>
+        <h4 style="color: var(--accent); margin-bottom: 5px;">🧬 Relative Strength Index (RSI)</h4>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify; margin-bottom: 15px;">
+          El RSI mide la velocidad y el cambio de los movimientos de precios en una escala de 0 a 100. Generalmente, un RSI menor a 30 indica que el activo está **sobrevendido** (potencial oportunidad de compra), y mayor a 70 indica que está **sobrecomprado** (potencial oportunidad de venta).
+        </p>
+        <h4 style="color: var(--accent); margin-bottom: 5px;">🧬 Moving Average Convergence Divergence (MACD)</h4>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify;">
+          El MACD es un indicador de impulso que sigue tendencias. Muestra la relación entre dos medias móviles. El histograma ayuda a visualizar la fuerza y dirección del movimiento (positivo indica impulso alcista, negativo indica bajista).
+        </p>
+      </div>
+
+      <!-- Fila 2 Derecha: Redes Bayesianas -->
+      <div class="resultado-card">
+        <h3>🧠 Red Bayesiana y Confianza</h3>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify;">
+          Una **Red Bayesiana** es un modelo probabilístico que representa un conjunto de variables y sus dependencias condicionales a través de un Grafo Acíclico Dirigido (DAG).
+        </p>
+        <h4 style="margin-top: 15px; color: var(--accent);">¿Cómo interpreta las señales?</h4>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify; margin-bottom: 10px;">
+          En lugar de usar reglas fijas e inflexibles, el modelo bayesiano realiza **inferencia probabilística**. Al observar indicadores (ej. RSI sobreventa, volumen extremo), propaga las probabilidades por el grafo utilizando el Teorema de Bayes para hallar la clase más probable (`BUY`, `SELL`, `HOLD`).
+        </p>
+        <p style="color: var(--text-muted); line-height: 1.5; font-size: 0.9rem; text-align: justify;">
+          El **nivel de confianza** (Bajo, Medio, Alto) es la probabilidad condicional resultante de la inferencia matemática.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- Fila inferior: Consejos y Advertencia -->
+    <section class="analysis-panel" style="margin-top: 20px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px;">
+      
+      <div class="resultado-card">
+        <h3>💡 Consejos Básicos para Principiantes</h3>
+        <ul style="padding-left: 20px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; text-align: justify;">
+          <li><strong>No persigas el mercado:</strong> Las compras emocionales por miedo a quedarse fuera (FOMO) suelen terminar en pérdidas. Espera a que el sistema valide la señal.</li>
+          <li><strong>Gestión de Riesgo:</strong> Define siempre un límite de pérdida antes de operar. No arriesgues capital que no estés dispuesto a perder.</li>
+          <li><strong>Comienza con simulación:</strong> Usa las herramientas del portafolio manual de CryptoAdvisor para realizar seguimiento a tus análisis sin arriesgar capital real.</li>
+          <li><strong>Alineación del Perfil:</strong> Ajusta tu perfil de riesgo en el Dashboard. El perfil *Conservador* es ideal si buscas evitar decisiones precipitadas.</li>
+        </ul>
+      </div>
+
+      <div class="resultado-card" style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); box-shadow: none;">
+        <h3 style="color: var(--red);">⚠️ Descargo de Responsabilidad</h3>
+        <p style="color: #e2e8f0; font-size: 0.85rem; line-height: 1.6; text-align: justify; margin-top: 10px;">
+          La información y análisis presentados en CryptoAdvisor son únicamente con fines educativos y de soporte de decisión heurística. No constituyen asesoría de inversión financiera, recomendación explícita para la ejecución de transacciones reales, ni ofertas de servicios financieros. El mercado de criptomonedas es altamente volátil e impredecible. Opere bajo su propia responsabilidad.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

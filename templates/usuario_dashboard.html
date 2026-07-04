@@ -21,6 +21,7 @@
       <li><a href="/portafolio">💼 Portafolio</a></li>
       <li><a href="/historial">📋 Mi Historial</a></li>
       <li><a href="/estadisticas">📈 Estadísticas</a></li>
+      <li><a href="/aprende">🧠 Aprende</a></li>
     </ul>
     <div class="sidebar-footer">
       <div class="sidebar-user">
@@ -63,20 +64,7 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Acción a Evaluar</label>
-          <div class="action-selector">
-            <button class="action-btn buy active" data-accion="comprar" onclick="seleccionarAccion(this)">
-              📈 COMPRAR
-            </button>
-            <button class="action-btn sell" data-accion="vender" onclick="seleccionarAccion(this)">
-              📉 VENDER
-            </button>
-            <button class="action-btn wait" data-accion="esperar" onclick="seleccionarAccion(this)">
-              ⏳ ESPERAR
-            </button>
-          </div>
-        </div>
+
 
 
         <div class="form-group">
@@ -211,5 +199,19 @@
 
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   <script src="{{ url_for('static', filename='js/usuario.js') }}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const symbol = urlParams.get('symbol');
+      if (symbol) {
+        setTimeout(() => {
+          seleccionarCripto(symbol);
+          setTimeout(() => {
+            ejecutarAnalisis();
+          }, 400);
+        }, 500);
+      }
+    });
+  </script>
 </body>
 </html>
