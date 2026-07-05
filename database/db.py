@@ -289,6 +289,9 @@ def get_estadisticas():
     stats["aprobadas"] = 0
     stats["rechazadas"] = 0
 
+    cursor.execute("SELECT COUNT(*) FROM usuarios")
+    stats["total_usuarios"] = cursor.fetchone()[0]
+
     cursor.execute("SELECT COUNT(*) FROM operaciones WHERE recomendacion = 'BUY'")
     stats["buy"] = stats["compras"] = cursor.fetchone()[0]
 
@@ -309,7 +312,17 @@ def get_estadisticas():
         ORDER BY total DESC
         LIMIT 5
     """)
-    stats["top_cryptos"] = [dict(row) for row in cursor.fetchall()]
+    top_cryptos = [dict(row) for row in cursor.fetchall()]
+    stats["top_cryptos"] = top_cryptos
+    stats["cripto_mas_consultada"] = top_cryptos[0]["cripto"].replace("USDT", "") if top_cryptos else "Ninguna"
+
+    cursor.execute("SELECT cripto, created_at, recomendacion FROM operaciones ORDER BY created_at DESC LIMIT 1")
+    last_op = cursor.fetchone()
+    if last_op:
+        stats["ultima_consulta"] = f"{last_op['cripto'].replace('USDT', '')} ({last_op['recomendacion']}) · {last_op['created_at'][:16]}"
+    else:
+        stats["ultima_consulta"] = "Ninguna"
+
     conn.close()
     return stats
 

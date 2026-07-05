@@ -31,25 +31,54 @@
         <p class="subtitle">Monitoreo del sistema y reentrenamiento de la Red Bayesiana.</p>
       </div>
       <button class="btn btn-primary" onclick="consultarEstadoSistema()">Ver estado Binance</button>
-    </header>
+    <!-- KPI CARDS -->
+    <section class="stats-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; width: 100%;">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">{{ stats.total_usuarios }}</div>
+        <div class="stat-label">Total de Usuarios Registrados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📋</div>
+        <div class="stat-value">{{ stats.total }}</div>
+        <div class="stat-label">Total de Consultas Realizadas</div>
+      </div>
+      <div class="stat-card approved">
+        <div class="stat-icon">📈</div>
+        <div class="stat-value">{{ stats.compras or 0 }}</div>
+        <div class="stat-label">Recomendaciones BUY</div>
+      </div>
+      <div class="stat-card rejected">
+        <div class="stat-icon">📉</div>
+        <div class="stat-value">{{ stats.ventas or 0 }}</div>
+        <div class="stat-label">Recomendaciones SELL</div>
+      </div>
+      <div class="stat-card pending">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-value">{{ stats.esperas or 0 }}</div>
+        <div class="stat-label">Recomendaciones HOLD</div>
+      </div>
+      <div class="stat-card prob">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-value" style="font-size: 1.15rem; font-family: var(--font-display);">{{ stats.cripto_mas_consultada }}</div>
+        <div class="stat-label">Criptomoneda Más Consultada</div>
+      </div>
+      <div class="stat-card" style="grid-column: span 2;">
+        <div class="stat-icon">⏱️</div>
+        <div class="stat-value" style="font-size: 0.9rem; font-family: var(--font-display); word-break: break-all;">{{ stats.ultima_consulta }}</div>
+        <div class="stat-label">Última Consulta Registrada</div>
+      </div>
+    </section>
 
     <section class="analysis-panel">
       <div class="resultado-card">
-        <h3>📊 Resumen de recomendaciones</h3>
-        <div class="metric-row"><span>Total</span><strong>{{ stats.total }}</strong></div>
-        <div class="metric-row"><span>BUY</span><strong>{{ stats.compras or stats.buy or 0 }}</strong></div>
-        <div class="metric-row"><span>SELL</span><strong>{{ stats.ventas or stats.sell or 0 }}</strong></div>
-        <div class="metric-row"><span>HOLD</span><strong>{{ stats.esperas or stats.hold or 0 }}</strong></div>
-        <div class="metric-row"><span>Confianza promedio</span><strong>{{ stats.prob_promedio or stats.confianza_promedio or 0 }}%</strong></div>
-      </div>
-
-      <div class="resultado-card">
-        <h3>🧠 Red Bayesiana</h3>
+        <h3>🧠 Estado del modelo</h3>
         <div class="metric-row"><span>Motor activo</span><strong>{{ modelo.tipo }}</strong></div>
         <div class="metric-row"><span>Versión</span><strong>{{ modelo.version }}</strong></div>
-        <div class="metric-row"><span>Último entrenamiento</span><strong>{{ modelo.fecha_entrenamiento }}</strong></div>
-        <div class="metric-row"><span>Muestras balanceadas</span><strong>{{ modelo.total_muestras }}</strong></div>
+        <div class="metric-row"><span>Último reentrenamiento</span><strong>{{ modelo.fecha_entrenamiento }}</strong></div>
+        <div class="metric-row"><span>Cantidad de muestras usadas</span><strong>{{ modelo.total_muestras }}</strong></div>
         <div class="metric-row"><span>Accuracy validación</span><strong>{{ modelo.accuracy_validacion_pct or 0 }}%</strong></div>
+        <div class="metric-row"><span>F1-score (Macro)</span><strong>{{ modelo.f1_macro_pct or 0 }}%</strong></div>
         <div class="metric-row"><span>Baseline Accuracy</span><strong>{{ modelo.baseline_accuracy_pct or 0 }}%</strong></div>
         {% if modelo.metrics_clases %}
         <div class="metric-row" style="border-top: 1px dashed var(--border-color); padding-top: 5px; margin-top: 5px;">
@@ -65,7 +94,7 @@
           <strong>{{ modelo.metrics_clases.HOLD.precision_pct }}% / {{ modelo.metrics_clases.HOLD.recall_pct }}% / {{ modelo.metrics_clases.HOLD.f1 }}</strong>
         </div>
         {% endif %}
-        <div class="metric-row"><span>Estado del modelo</span><strong>{{ modelo.estado or 'Activo' }}</strong></div>
+        <div class="metric-row"><span>Estado del modelo</span><strong>{{ 'Activo' if modelo.total_muestras > 0 else 'No disponible' }}</strong></div>
         <div class="metric-row"><span>Pares usados</span><strong>{{ modelo.pares_usados | join(', ') if modelo.pares_usados else 'Ninguno' }}</strong></div>
 
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
@@ -75,10 +104,20 @@
         <p class="legal-text">El despliegue se considera válido si supera el Baseline, F1 Macro ≥ 55% y los recalls de BUY/SELL son ≥ 45%.</p>
         <div id="model-status" class="alert hidden"></div>
       </div>
- 
+  
       <div class="resultado-card">
         <h3>🔌 Estado del sistema</h3>
-        <p>Binance API, base de datos SQLite y motor bayesiano.</p>
+        <div class="metric-row">
+          <span>Conexión con Binance</span>
+          <strong id="sys-binance">Cargando...</strong>
+        </div>
+        <div class="metric-row">
+          <span>Estado de base de datos</span>
+          <strong id="sys-db">Cargando...</strong>
+        </div>
+        <div style="margin-top: 15px;">
+          <button class="btn btn-sm btn-secondary" onclick="consultarEstadoSistema()">Refrescar estado detallado</button>
+        </div>
         <div id="system-status" class="alert hidden"></div>
       </div>
     </section>
@@ -101,6 +140,31 @@
  
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/admin/system_status');
+        const data = await res.json();
+        const binanceEl = document.getElementById('sys-binance');
+        const dbEl = document.getElementById('sys-db');
+        if (data.ok) {
+          binanceEl.textContent = "Activa";
+          binanceEl.style.color = "var(--green)";
+          dbEl.textContent = "Activa";
+          dbEl.style.color = "var(--green)";
+        } else {
+          binanceEl.textContent = (data.datos && data.datos.binance === "error") ? "Error" : "Activa";
+          if (binanceEl.textContent === "Error") binanceEl.style.color = "var(--red)";
+          dbEl.textContent = "Activa";
+          dbEl.style.color = "var(--green)";
+        }
+      } catch (e) {
+        document.getElementById('sys-binance').textContent = "Error";
+        document.getElementById('sys-binance').style.color = "var(--red)";
+        document.getElementById('sys-db').textContent = "Activa";
+        document.getElementById('sys-db').style.color = "var(--green)";
+      }
+    });
+
     async function consultarEstadoSistema() {
       const box = document.getElementById('system-status');
       box.classList.remove('hidden');

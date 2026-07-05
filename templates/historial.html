@@ -53,13 +53,35 @@
           {% endif %}
         </p>
       </div>
-      <div class="filter-bar">
+      <div class="filter-bar" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; width: 100%;">
         <input
           type="text"
           id="filtro-busqueda"
-          placeholder="🔍 Buscar por cripto, recomendación..."
+          placeholder="🔍 Buscar por cripto..."
           oninput="filtrarTabla()"
+          style="flex: 1; min-width: 150px;"
         >
+        {% if rol == 'admin' %}
+        <input
+          type="text"
+          id="filtro-usuario"
+          placeholder="👤 Filtrar por usuario"
+          oninput="filtrarTabla()"
+          style="min-width: 150px; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: var(--bg-card2); color: var(--text-primary);"
+        >
+        <select id="filtro-recomendacion" onchange="filtrarTabla()" style="min-width: 150px; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: var(--bg-card2); color: var(--text-primary); font-family: var(--font-mono);">
+          <option value="">Todas las recomendaciones</option>
+          <option value="BUY">BUY</option>
+          <option value="SELL">SELL</option>
+          <option value="HOLD">HOLD</option>
+        </select>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">Desde:</span>
+          <input type="date" id="filtro-fecha-inicio" onchange="filtrarTabla()" style="padding: 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: var(--bg-card2); color: var(--text-primary);">
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">Hasta:</span>
+          <input type="date" id="filtro-fecha-fin" onchange="filtrarTabla()" style="padding: 8px; border-radius: var(--radius-sm); border: 1px solid var(--border-light); background: var(--bg-card2); color: var(--text-primary);">
+        </div>
+        {% endif %}
       </div>
     </header>
  
@@ -83,7 +105,7 @@
           </thead>
           <tbody>
             {% for op in operaciones %}
-            <tr class="hist-row" data-cripto="{{ op.cripto }}" data-recomendacion="{{ op.recomendacion }}">
+            <tr class="hist-row" data-cripto="{{ op.cripto }}" data-recomendacion="{{ op.recomendacion }}" data-usuario="{{ op.username or '' }}">
               <td><span class="op-id">#{{ op.id }}</span></td>
               {% if rol == 'admin' %}<td>{{ op.username }}</td>{% endif %}
               <td><span class="cripto-tag">{{ op.cripto | replace('USDT','') }}</span></td>
@@ -149,12 +171,44 @@
   <script>
     function filtrarTabla() {
       const busqueda = document.getElementById('filtro-busqueda').value.toLowerCase();
-      const filas    = document.querySelectorAll('.hist-row');
+      
+      const filtroUsuario = document.getElementById('filtro-usuario');
+      const usuario = filtroUsuario ? filtroUsuario.value.toLowerCase().trim() : '';
+      
+      const filtroRecomendacion = document.getElementById('filtro-recomendacion');
+      const recomendacion = filtroRecomendacion ? filtroRecomendacion.value : '';
+      
+      const fechaInicioVal = document.getElementById('filtro-fecha-inicio') ? document.getElementById('filtro-fecha-inicio').value : '';
+      const fechaFinVal = document.getElementById('filtro-fecha-fin') ? document.getElementById('filtro-fecha-fin').value : '';
+      
+      const filas = document.querySelectorAll('.hist-row');
 
       filas.forEach(fila => {
         const text = fila.textContent.toLowerCase();
-        const mostrar = text.includes(busqueda);
-        fila.style.display = mostrar ? '' : 'none';
+        const recAttr = fila.dataset.recomendacion || '';
+        const usrAttr = fila.dataset.usuario ? fila.dataset.usuario.toLowerCase().trim() : '';
+        
+        // La fecha está en la columna de fecha (clase date-col). Tomamos los primeros 10 caracteres YYYY-MM-DD
+        const dateEl = fila.querySelector('.date-col');
+        const rowDateStr = dateEl ? dateEl.textContent.trim().substring(0, 10) : '';
+        
+        let matchBusqueda = text.includes(busqueda);
+        let matchUsuario = usuario === '' || usrAttr.includes(usuario);
+        let matchRecomendacion = recomendacion === '' || recAttr === recomendacion;
+        
+        let matchFecha = true;
+        if (fechaInicioVal && rowDateStr < fechaInicioVal) {
+          matchFecha = false;
+        }
+        if (fechaFinVal && rowDateStr > fechaFinVal) {
+          matchFecha = false;
+        }
+        
+        if (matchBusqueda && matchUsuario && matchRecomendacion && matchFecha) {
+          fila.style.display = '';
+        } else {
+          fila.style.display = 'none';
+        }
       });
     }
   </script>
