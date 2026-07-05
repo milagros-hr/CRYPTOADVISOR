@@ -31,6 +31,8 @@
         <p class="subtitle">Monitoreo del sistema y reentrenamiento de la Red Bayesiana.</p>
       </div>
       <button class="btn btn-primary" onclick="consultarEstadoSistema()">Ver estado Binance</button>
+    </header>
+
     <!-- KPI CARDS -->
     <section class="stats-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; width: 100%;">
       <div class="stat-card">
@@ -95,7 +97,7 @@
         </div>
         {% endif %}
         <div class="metric-row"><span>Estado del modelo</span><strong>{{ 'Activo' if modelo.total_muestras > 0 else 'No disponible' }}</strong></div>
-        <div class="metric-row"><span>Pares usados</span><strong>{{ modelo.pares_usados | join(', ') if modelo.pares_usados else 'Ninguno' }}</strong></div>
+        <div class="metric-row" style="flex-wrap: wrap; height: auto; min-height: 32px;"><span style="margin-right: 10px;">Pares usados</span><strong style="text-align: right; max-width: 70%; word-break: break-word; white-space: normal;">{{ modelo.pares_usados | join(', ') if modelo.pares_usados else 'Ninguno' }}</strong></div>
 
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
           <button class="btn btn-success" onclick="reentrenarModelo()">Reentrenar modelo</button>
