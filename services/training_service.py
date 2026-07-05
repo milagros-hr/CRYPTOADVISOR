@@ -495,14 +495,14 @@ def reentrenar_modelo():
             seen[v["open_time"]] = v
         velas_par = sorted(seen.values(), key=lambda v: v["open_time"])
 
-        # Separar OOS: 20% más antiguo (período histórico distinto)
-        n_oos = max(1, int(len(velas_par) * 0.20))
-        oos_velas = velas_par[:n_oos]
-        train_velas = velas_par[n_oos:]
+        # Separar OOS: 20% más reciente (holdout futuro)
+        n_train_val = int(len(velas_par) * 0.80)
+        train_velas = velas_par[:n_train_val]
+        oos_velas = velas_par[n_train_val:]
 
         if len(train_velas) >= 100:
             klines_dict_train[par] = train_velas
-        if len(oos_velas) >= 50:
+        if len(oos_velas) >= 10:
             klines_dict_oos[par] = oos_velas
 
     if not klines_dict_train:
@@ -576,8 +576,8 @@ def reentrenar_modelo():
     muestras_finales = generar_dataset(best_N, best_th, klines_dict_train)
     M = len(muestras_finales)
 
-    # Validación interna temporal: últimos 20% del período de entrenamiento
-    split_idx = int(M * 0.80)
+    # Validación interna temporal: últimos 25% del período de desarrollo (20% del total)
+    split_idx = int(M * 0.75)
     train_raw = muestras_finales[:split_idx]
     val_final = muestras_finales[split_idx:]
 
@@ -643,6 +643,7 @@ def reentrenar_modelo():
     
     modelo_candidato = {
         "global": global_model,
+        "features": global_model.get("features", []),
         "tipo": "Red Bayesiana discreta",
         "version": datetime.now().strftime("%Y%m%d%H%M%S"),
         "fecha_entrenamiento": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -863,8 +864,9 @@ def estado_modelo():
 
 
 def agregar_muestra(muestra: dict) -> bool:
-    """Añade una muestra real al dataset training_data.json."""
+    """Añade una muestra real al dataset training_data.json e incrementa el modelo activo."""
     try:
+        # 1. Guardar en JSON (histórico de muestras)
         data_json = {"description": "Datos de entrenamiento reales balanceados extraídos de Binance", "samples": []}
         if os.path.exists(TRAINING_PATH):
             try:
@@ -880,6 +882,19 @@ def agregar_muestra(muestra: dict) -> bool:
         
         with open(TRAINING_PATH, "w", encoding="utf-8") as f:
             json.dump(data_json, f, indent=2, ensure_ascii=False)
+
+        # 2. Aprendizaje Incremental en el modelo activo
+        try:
+            modelo = bayesian_model.cargar_modelo()
+            par = muestra.get("par") or "global"
+            # Actualizar incrementalmente el submodelo específico y el global
+            modelo = bayesian_model.actualizar_modelo_incremental(muestra, symbol=par, modelo=modelo)
+            modelo = bayesian_model.actualizar_modelo_incremental(muestra, symbol="global", modelo=modelo)
+            bayesian_model.guardar_modelo(modelo)
+            print(f"[Training] Modelo actualizado incrementalmente para {par} y global.")
+        except Exception as e:
+            print(f"[Training] Warning actualizando modelo incrementalmente: {e}")
+            
         return True
     except Exception as e:
         print(f"[Training] Error al agregar muestra: {e}")
